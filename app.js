@@ -12,15 +12,17 @@ const employeeDiseasetRoute = require('./src/employee-disease/infrastructure/Emp
 const typeAbsenceRoute = require('./src/type-absence/infrastructure/TypeAbsenceRoute')
 const absenceRoute = require('./src/absence/infrastructure/AbsenceRoute')
 const diseaseRoute = require('./src/disease/infrastructure/DiseaseRoute')
+const employeeReentryRoute = require('./src/employee-reentry/infrastructure/EmployeeReentryRoute')
+
 
 app.use(cors());
 app.use(express.json({ limit: '10mb' }))
 
-app.use('/api', areaRoute, jobRoute, departmentRoute, employeeRoute, emergencieRoute, contractRoute, diseaseRoute, employeeDiseasetRoute, typeAbsenceRoute,
-
-
-
-absenceRoute)
+app.use('/api',
+    areaRoute, jobRoute, departmentRoute, employeeRoute,
+    emergencieRoute, contractRoute, diseaseRoute, employeeDiseasetRoute,
+    typeAbsenceRoute, absenceRoute, employeeReentryRoute
+)
 
 app.listen(PORT, () => {
     console.log('Servidor escuchando en el puerto ' + PORT);

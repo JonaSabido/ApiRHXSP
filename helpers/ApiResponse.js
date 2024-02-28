@@ -1,4 +1,4 @@
-const SendSucces = (response, statusCode, data, message) => {
+const SendSuccess = (response, statusCode, data, message) => {
     return response.status(statusCode).json(
         {
             success: true,
@@ -19,6 +19,6 @@ const SendError = (response, statusCode, dataError, error) => {
 }
 
 module.exports = {
-    SendSucces,
+    SendSuccess,
     SendError,
 }

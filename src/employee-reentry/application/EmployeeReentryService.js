@@ -17,7 +17,7 @@ class EmployeeReentryService {
             entity.id,
             entity.id_employee,
             entity.reentry_date,
-            entity.descriptiom,
+            entity.description,
             entity.createdAt,
             entity.updatedAt,
             entity.employee,
@@ -30,7 +30,7 @@ class EmployeeReentryService {
             newEntity.id,
             newEntity.id_employee,
             newEntity.reentry_date,
-            newEntity.descriptiom,
+            newEntity.description,
             newEntity.createdAt,
             newEntity.updatedAt,
         );

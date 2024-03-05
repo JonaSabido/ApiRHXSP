@@ -14,6 +14,8 @@ const absenceRoute = require('./src/absence/infrastructure/AbsenceRoute')
 const diseaseRoute = require('./src/disease/infrastructure/DiseaseRoute')
 const employeeReentryRoute = require('./src/employee-reentry/infrastructure/EmployeeReentryRoute')
 const employeeLeavesRoute = require('./src/employee-leaves/infrastructure/EmployeeLeaveRoute')
+const vacationTimesRoute = require('./src/vacationtime/infrastructure/VacationTimeRoute')
+const employeeVacationRoute = require('./src/employee_vacation/infrastructure/EmployeeVacationRoute')
 
 
 app.use(cors());
@@ -22,7 +24,8 @@ app.use(express.json({ limit: '10mb' }))
 app.use('/api',
     areaRoute, jobRoute, departmentRoute, employeeRoute,
     emergencieRoute, contractRoute, diseaseRoute, employeeDiseasetRoute,
-    typeAbsenceRoute, absenceRoute, employeeReentryRoute, employeeLeavesRoute
+    typeAbsenceRoute, absenceRoute, employeeReentryRoute, employeeLeavesRoute, vacationTimesRoute,
+    employeeVacationRoute
 )
 
 app.listen(PORT, () => {

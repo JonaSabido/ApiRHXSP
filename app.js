@@ -16,6 +16,8 @@ const employeeReentryRoute = require('./src/employee-reentry/infrastructure/Empl
 const employeeLeavesRoute = require('./src/employee-leaves/infrastructure/EmployeeLeaveRoute')
 const vacationTimesRoute = require('./src/vacationtime/infrastructure/VacationTimeRoute')
 const employeeVacationRoute = require('./src/employee_vacation/infrastructure/EmployeeVacationRoute')
+const recommendationRoute = require ('./src/recommendation/infrastructure/RecommendationRoute.js')
+const recommendationPaymentRoute = require('./src/recommendation_payment/infrastructure/RecommendationPaymentRoute.js')
 
 
 app.use(cors());
@@ -25,7 +27,7 @@ app.use('/api',
     areaRoute, jobRoute, departmentRoute, employeeRoute,
     emergencieRoute, contractRoute, diseaseRoute, employeeDiseasetRoute,
     typeAbsenceRoute, absenceRoute, employeeReentryRoute, employeeLeavesRoute, vacationTimesRoute,
-    employeeVacationRoute
+    employeeVacationRoute, recommendationRoute, recommendationPaymentRoute
 )
 
 app.listen(PORT, () => {

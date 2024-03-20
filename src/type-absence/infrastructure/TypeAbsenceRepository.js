@@ -27,6 +27,43 @@ class TypeAbsenceRepository extends ITypeAbsenceRepository {
             throw new Error(err.message)
         }
     }
+
+
+    async create(data) {
+        try {
+            return await TypeAbsenceModel.create(data)
+        }
+        catch (err) {
+            throw new Error(err.message)
+        }
+    }
+
+    async update(id, data) {
+        try {
+            return await TypeAbsenceModel.update(data, {
+                where: {
+                    id: id
+                }
+            })
+        }
+        catch (err) {
+            throw new Error(err.message)
+        }
+    }
+
+    async delete(id) {
+        try {
+            return await TypeAbsenceModel.destroy(
+                {
+                    where: {
+                        id: id
+                    }
+                })
+        }
+        catch (err) {
+            throw new Error(err.message)
+        }
+    }
 }
 
 module.exports = TypeAbsenceRepository;

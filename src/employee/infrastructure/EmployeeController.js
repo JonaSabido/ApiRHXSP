@@ -1,5 +1,6 @@
 const { SendSuccess, SendError } = require('../../../helpers/ApiResponse');
 const EmployeeService = require('../application/EmployeeService');
+const EmployeeResponseDTO = require('../domain/EmployeeResponseDTO');
 const EmployeeRepository = require('./EmployeeRepository');
 
 const employeeRepository = new EmployeeRepository();
@@ -8,7 +9,12 @@ const employeeService = new EmployeeService(employeeRepository);
 const getAll = async (request, response) => {
     const data = await employeeService.getAllEmployees()
     if (data.length) {
-        return SendSuccess(response, 200, data, 'Ok')
+        const list = []
+        data.forEach(element => {
+            const newDTO = new EmployeeResponseDTO(element)    
+            list.push(newDTO)
+        });
+        return SendSuccess(response, 200, list, 'Ok')
     }
     return SendError(response, 404, [], 'No data found')
 }

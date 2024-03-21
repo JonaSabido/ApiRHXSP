@@ -6,6 +6,7 @@ class EmployeeResponseDTO {
         this.id_department = employee.id_department;
         this.id_job = employee.id_job;
         this.code = employee.code;
+        this.full_name = `${employee.name} ${employee.sure_name} ${employee.last_name}`;
         this.name = employee.name;
         this.sure_name = employee.sure_name;
         this.last_name = employee.last_name;

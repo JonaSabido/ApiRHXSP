@@ -1,4 +1,4 @@
-const SendSuccess = (response, statusCode, data, message) => {
+const SendSuccessData = (response, statusCode, data, message) => {
     return response.status(statusCode).json(
         {
             success: true,
@@ -8,7 +8,16 @@ const SendSuccess = (response, statusCode, data, message) => {
     )
 }
 
-const SendError = (response, statusCode, dataError, error) => {
+const SendSuccessAuth = (response, token) => {
+    return response.status(201).json(
+        {
+            token: token,
+            message: 'Authentication Succesful'
+        }
+    )
+}
+
+const SendErrorData = (response, statusCode, dataError, error) => {
     return response.status(statusCode).json(
         {
             success: false,
@@ -18,7 +27,17 @@ const SendError = (response, statusCode, dataError, error) => {
     )
 }
 
+const SendErrorAuth = (response) => {
+    return response.status(401).json(
+        {
+            message: 'Unauthorized'
+        }
+    )
+}
+
 module.exports = {
-    SendSuccess,
-    SendError,
+    SendSuccessData,
+    SendSuccessAuth,
+    SendErrorData,
+    SendErrorAuth,
 }

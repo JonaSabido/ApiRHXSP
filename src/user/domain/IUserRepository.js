@@ -6,6 +6,10 @@ class IUserRepository {
     async getById(id) {
       throw new Error('Method not implemented');
     }
+
+    async getByFilters(filters, attributes) {
+      throw new Error('Method not implemented');
+    }
   
     async create(data) {
       throw new Error('Method not implemented');

@@ -1,4 +1,4 @@
-const { SendSuccess, SendError } = require('../../../helpers/ApiResponse');
+const { SendSuccessData, SendErrorData } = require('../../../helpers/ApiResponse');
 const UserService = require('../application/UserService');
 const UserRepository = require('./UserRepository');
 
@@ -8,19 +8,19 @@ const userService = new UserService(userRepository);
 const getAll = async (request, response) => {
     const data = await userService.getAllUsers()
     if (data.length) {
-        return SendSuccess(response, 200, data, 'Ok')
+        return SendSuccessData(response, 200, data, 'Ok')
     }
-    return SendError(response, 404, [], 'No data found')
+    return SendErrorData(response, 404, [], 'No data found')
 }
 
 const getById = async (request, response) => {
     try {
         const id = request.params.id
         const entity = await userService.getUserById(id)
-        return SendSuccess(response, 200, entity, 'Ok')
+        return SendSuccessData(response, 200, entity, 'Ok')
     }
     catch (err) {
-        return SendError(response, 404, null, err.message)
+        return SendErrorData(response, 404, null, err.message)
     }
 }
 
@@ -28,10 +28,10 @@ const create = async (request, response) => {
     const data = request.body
     try {
         const newEntity = await userService.createUser(data)
-        return SendSuccess(response, 201, newEntity, 'Created')
+        return SendSuccessData(response, 201, newEntity, 'Created')
     }
     catch (err) {
-        return SendError(response, 500, null, err.message)
+        return SendErrorData(response, 500, null, err.message)
     }
 }
 
@@ -40,10 +40,10 @@ const updateById = async (request, response) => {
     const id = request.params.id
     try {
         const updatedEntity = await userService.updateUser(id, data)
-        return SendSuccess(response, 200, updatedEntity, 'Updated')
+        return SendSuccessData(response, 200, updatedEntity, 'Updated')
     }
     catch (err) {
-        return SendError(response, 500, null, err.message)
+        return SendErrorData(response, 500, null, err.message)
 
     }
 }
@@ -53,10 +53,10 @@ const deleteById = async (request, response) => {
     const id = request.params.id
     try {
         const deletedEntity = await userService.deleteUser(id)
-        return SendSuccess(response, 200, deletedEntity, 'Deleted')
+        return SendSuccessData(response, 200, deletedEntity, 'Deleted')
     }
     catch (err) {
-        return SendError(response, 500, null, err.message)
+        return SendErrorData(response, 500, null, err.message)
     }
 }
 

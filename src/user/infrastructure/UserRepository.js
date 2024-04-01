@@ -28,6 +28,19 @@ class UserRepository extends IUserRepository {
         }
     }
 
+    async getByFilters(filters, attributes) {
+        try {
+            const entity = await UserModel.findOne({
+                where: filters,
+                attributes: attributes
+            })
+            return entity
+        }
+        catch (err) {
+            throw new Error(err.message)
+        }
+    }
+
     async create(data) {
         try {
             return await UserModel.create(data)

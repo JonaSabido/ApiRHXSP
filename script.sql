@@ -249,6 +249,16 @@ CREATE TABLE diseases (
     PRIMARY KEY(id)
 );
 
+CREATE TABLE users (
+    id INT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(200) NOT NULL,
+    email VARCHAR(300) NOT NULL UNIQUE,
+    password VARCHAR(300) NOT NULL,
+    createdAt TIMESTAMP NULL DEFAULT NULL,
+    updatedAt TIMESTAMP NULL DEFAULT NULL,
+    PRIMARY KEY(id)
+)
+
 ALTER TABLE employee_diseases DROP COLUMN name;
 ALTER TABLE employee_diseases ADD COLUMN id_disease INT NOT NULL AFTER id_employee;
 ALTER TABLE employee_diseases ADD FOREIGN KEY (id_disease) REFERENCES diseases(id);

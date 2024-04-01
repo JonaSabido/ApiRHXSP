@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize')
 const { connection } = require('../../../config.db')
 const { EmployeeModel } = require('../../employee/infrastructure/EmployeeModel')
-const { RecommendationModel} = require('../../recommendation/infrastructure/RecommendationModel')
+const { RecommendationModel } = require('../../recommendation/infrastructure/RecommendationModel')
 
 const RecommendationPaymentModel = connection.define('recommendation_payment', {
     id_recommendation: {
@@ -16,9 +16,13 @@ const RecommendationPaymentModel = connection.define('recommendation_payment', {
         type: DataTypes.DATE,
         allowNull: false
     },
+    status: {
+        type: DataTypes.NUMBER,
+        allowNull: false
+    }
 })
-RecommendationPaymentModel.belongsTo(RecommendationModel , {as: 'recommendation', foreignKey: 'id_recommendation' })  //relac
-RecommendationPaymentModel.belongsTo(EmployeeModel , { as: 'employee', foreignKey: 'id_paying_employee' })
+RecommendationPaymentModel.belongsTo(RecommendationModel, { as: 'recommendation', foreignKey: 'id_recommendation' })  //relac
+RecommendationPaymentModel.belongsTo(EmployeeModel, { as: 'employee', foreignKey: 'id_paying_employee' })
 
 
 

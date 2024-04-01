@@ -18,6 +18,7 @@ class RecommendationPaymentService {
             entity.id_recommendation,
             entity.id_paying_employee,
             entity.payment_date,
+            entity.status,
             entity.createdAt,
             entity.updatedAt,
             entity.employee,
@@ -31,7 +32,8 @@ class RecommendationPaymentService {
             newEntity.id,
             newEntity.id_recommendation,
             newEntity.id_paying_employee,
-            entity.payment_date,
+            newEntity.payment_date,
+            newEntity.status,
             newEntity.createdAt,
             newEntity.updatedAt,
         );

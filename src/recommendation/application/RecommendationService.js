@@ -1,4 +1,4 @@
-const Recommendation = require("../domain/RecommendationTime");
+const Recommendation = require("../domain/Recommendation");
 
 class RecommendationService {
     constructor(
@@ -18,8 +18,6 @@ class RecommendationService {
             entity.id_employee,
             entity.id_recommended_employee,
             entity.amount,
-            entity.first_payment_date,
-            entity.second_payment_date,
             entity.createdAt,
             entity.updatedAt,
             entity.employee,
@@ -33,9 +31,7 @@ class RecommendationService {
             newEntity.id,
             newEntity.id_employee,
             newEntity.id_recommended_employee,
-            entity.amount,
-            entity.first_payment_date,
-            entity.second_payment_date,
+            newEntity.amount,
             newEntity.createdAt,
             newEntity.updatedAt,
         );

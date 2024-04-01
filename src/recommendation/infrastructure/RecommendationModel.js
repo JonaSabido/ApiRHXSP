@@ -15,14 +15,6 @@ const RecommendationModel = connection.define('recommendation', {
         type: DataTypes.DECIMAL(10,2),
         allowNull: false
     },
-    first_payment_date: {
-        type: DataTypes.DATE,
-        allowNull: false
-    },
-    second_payment_date: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-    }
 })
 RecommendationModel.belongsTo(EmployeeModel , { as: 'employee', foreignKey: 'id_employee' });
 

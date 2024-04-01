@@ -256,3 +256,7 @@ ALTER TABLE employee_diseases ADD FOREIGN KEY (id_disease) REFERENCES diseases(i
 RENAME TABLE employee_absences TO absences;
 RENAME TABLE employee_contracts TO contracts;
 
+ALTER TABLE recommendations drop column first_payment_date;
+ALTER TABLE recommendations drop column second_payment_date;
+ALTER TABLE recommendation_payments ADD COLUMN status INT NOT NULL AFTER payment_date;
+

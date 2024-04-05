@@ -6,7 +6,7 @@ const employeeDiseaseRepository = new EmployeeDiseaseRepository();
 const employeeDiseaseService = new EmployeeDiseaseService(employeeDiseaseRepository);
 
 const getAll = async (request, response) => {
-    const data = await employeeDiseaseService.getAllEmployeeDiseases()
+    const data = await employeeDiseaseService.getAllEmployeeDiseases(request.query)
     if (data.length) {
         return SendSuccessData(response, 200, data, 'Ok')
     }

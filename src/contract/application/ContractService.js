@@ -7,8 +7,8 @@ class ContractContractService {
         this.iContractRepository = iContractRepository
     }
 
-    async getAllContracts() {
-        return await this.iContractRepository.getAll();
+    async getAllContracts(filters) {
+        return await this.iContractRepository.getAll(filters);
     }
 
     async getContractById(id) {

@@ -7,8 +7,8 @@ class DepartmentService {
         this.iDepartmentRepository = iDepartmentRepository
     }
 
-    async getAllDepartments() {
-        return await this.iDepartmentRepository.getAll();
+    async getAllDepartments(filters) {
+        return await this.iDepartmentRepository.getAll(filters);
     }
 
     async getDepartmentById(id) {

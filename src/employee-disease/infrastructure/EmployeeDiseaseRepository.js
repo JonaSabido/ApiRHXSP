@@ -2,6 +2,7 @@ const IEmployeeDiseaseRepository = require('../domain/IEmployeeDiseaseRepository
 const { EmployeeDiseaseModel } = require('./EmployeeDiseaseModel')
 const { EmployeeModel } = require('../../employee/infrastructure/EmployeeModel');
 const { DiseaseModel } = require('../../disease/infrastructure/DiseaseModel');
+const { EmployeeDiseaseQueryFilter } = require('../../../helpers/QueryFilters');
 
 
 const relations = [
@@ -22,9 +23,12 @@ class EmployeeDiseaseRepository extends IEmployeeDiseaseRepository {
         super()
     }
 
-    async getAll() {
+    async getAll(filters) {
         try {
-            return await EmployeeDiseaseModel.findAll({ include: relations });
+            return await EmployeeDiseaseModel.findAll({
+                include: relations,
+                where: EmployeeDiseaseQueryFilter(filters)
+            });
         }
         catch (err) {
             throw new Error(err.message)

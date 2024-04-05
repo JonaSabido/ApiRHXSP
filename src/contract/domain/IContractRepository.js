@@ -1,5 +1,5 @@
 class IContractRepository {
-  async getAll() {
+  async getAll(filters) {
     throw new Error('Method not implemented');
   }
 

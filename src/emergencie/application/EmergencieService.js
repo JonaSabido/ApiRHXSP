@@ -7,8 +7,8 @@ class EmergencieService {
         this.iEmergencieRepository = iEmergencieRepository
     }
 
-    async getAllEmergencies() {
-        return await this.iEmergencieRepository.getAll();
+    async getAllEmergencies(filters) {
+        return await this.iEmergencieRepository.getAll(filters);
     }
 
     async getEmergencieById(id) {

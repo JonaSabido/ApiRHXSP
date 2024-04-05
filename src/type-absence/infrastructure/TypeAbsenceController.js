@@ -6,7 +6,7 @@ const typeAbsenceRepository = new TypeAbsenceRepository();
 const typeAbsenceService = new TypeAbsenceService(typeAbsenceRepository);
 
 const getAll = async (request, response) => {
-    const data = await typeAbsenceService.getAllTypeAbsences()
+    const data = await typeAbsenceService.getAllTypeAbsences(request.query)
     if (data.length) {
         return SendSuccessData(response, 200, data, 'Ok')
     }

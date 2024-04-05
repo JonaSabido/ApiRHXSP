@@ -7,8 +7,8 @@ class EmployeeDiseaseContractService {
         this.iEmployeeDiseaseRepository = iEmployeeDiseaseRepository
     }
 
-    async getAllEmployeeDiseases() {
-        return await this.iEmployeeDiseaseRepository.getAll();
+    async getAllEmployeeDiseases(filters) {
+        return await this.iEmployeeDiseaseRepository.getAll(filters);
     }
 
     async getEmployeeDiseaseById(id) {

@@ -7,8 +7,8 @@ class TypeAbsenceService {
         this.iTypeAbsenceRepository = iTypeAbsenceRepository
     }
 
-    async getAllTypeAbsences() {
-        return await this.iTypeAbsenceRepository.getAll();
+    async getAllTypeAbsences(filters) {
+        return await this.iTypeAbsenceRepository.getAll(filters);
     }
 
     async getTypeAbsenceById(id) {

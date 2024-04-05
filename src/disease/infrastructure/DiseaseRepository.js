@@ -1,3 +1,4 @@
+const { DiseaseQueryFilter } = require('../../../helpers/QueryFilters');
 const IDiseaseRepository = require('../domain/IDiseaseRepository');
 const { DiseaseModel } = require('./DiseaseModel')
 
@@ -6,9 +7,11 @@ class DiseaseRepository extends IDiseaseRepository {
         super()
     }
 
-    async getAll() {
+    async getAll(filters) {
         try {
-            return await DiseaseModel.findAll();
+            return await DiseaseModel.findAll({
+                where: DiseaseQueryFilter(filters)
+            });
         }
         catch (err) {
             throw new Error(err.message)

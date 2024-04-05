@@ -1,3 +1,4 @@
+const { TypeAbsenceQueryFilter } = require('../../../helpers/QueryFilters');
 const ITypeAbsenceRepository = require('../domain/ITypeAbsenceRepository');
 const { TypeAbsenceModel } = require('./TypeAbsenceModel')
 
@@ -6,9 +7,11 @@ class TypeAbsenceRepository extends ITypeAbsenceRepository {
         super()
     }
 
-    async getAll() {
+    async getAll(filters) {
         try {
-            return await TypeAbsenceModel.findAll();
+            return await TypeAbsenceModel.findAll({
+                where: TypeAbsenceQueryFilter(filters)
+            });
         }
         catch (err) {
             throw new Error(err.message)

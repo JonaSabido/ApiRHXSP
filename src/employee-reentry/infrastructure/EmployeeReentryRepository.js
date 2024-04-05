@@ -1,6 +1,7 @@
 const IEmployeeReentryRepository = require('../domain/IEmployeeReentryRepository');
 const { EmployeeReentryModel } = require('./EmployeeReentryModel')
 const { EmployeeModel } = require('../../employee/infrastructure/EmployeeModel');
+const { EmployeeReentryQueryFilter } = require('../../../helpers/QueryFilters');
 
 
 const relations = [
@@ -16,9 +17,12 @@ class EmployeeReentryRepository extends IEmployeeReentryRepository {
         super()
     }
 
-    async getAll() {
+    async getAll(filters) {
         try {
-            return await EmployeeReentryModel.findAll({ include: relations });
+            return await EmployeeReentryModel.findAll({
+                include: relations,
+                where: EmployeeReentryQueryFilter(filters)
+            });
         }
         catch (err) {
             throw new Error(err.message)

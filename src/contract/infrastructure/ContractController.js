@@ -6,7 +6,7 @@ const contractRepository = new ContractRepository();
 const contractService = new ContractService(contractRepository);
 
 const getAll = async (request, response) => {
-    const data = await contractService.getAllContracts()
+    const data = await contractService.getAllContracts(request.query)
     if (data.length) {
         return SendSuccessData(response, 200, data, 'Ok')
     }

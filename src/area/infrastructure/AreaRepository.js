@@ -1,3 +1,4 @@
+const { AreaQueryFilter } = require('../../../helpers/QueryFilters');
 const IAreaRepository = require('../domain/IAreaRepository');
 const { AreaModel } = require('./AreaModel')
 
@@ -6,9 +7,11 @@ class AreaRepository extends IAreaRepository {
         super()
     }
 
-    async getAll() {
+    async getAll(filters) {
         try {
-            return await AreaModel.findAll();
+            return await AreaModel.findAll({
+                where: AreaQueryFilter(filters)
+            });
         }
         catch (err) {
             throw new Error(err.message)

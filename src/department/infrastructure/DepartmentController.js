@@ -6,7 +6,7 @@ const departmentRepository = new DepartmentRepository();
 const departmentService = new DepartmentService(departmentRepository);
 
 const getAll = async (request, response) => {
-    const data = await departmentService.getAllDepartments()
+    const data = await departmentService.getAllDepartments(request.query)
     if (data.length) {
         return SendSuccessData(response, 200, data, 'Ok')
     }

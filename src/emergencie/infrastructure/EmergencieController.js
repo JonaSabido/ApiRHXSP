@@ -6,7 +6,7 @@ const emergencieRepository = new EmergencieRepository();
 const emergencieService = new EmergencieService(emergencieRepository);
 
 const getAll = async (request, response) => {
-    const data = await emergencieService.getAllEmergencies()
+    const data = await emergencieService.getAllEmergencies(request.query)
     if (data.length) {
         return SendSuccessData(response, 200, data, 'Ok')
     }

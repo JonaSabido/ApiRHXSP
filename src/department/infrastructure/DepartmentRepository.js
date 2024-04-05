@@ -1,3 +1,4 @@
+const { DepartmentQueryFilter } = require('../../../helpers/QueryFilters');
 const IDepartmentRepository = require('../domain/IDepartmentRepository');
 const { DepartmentModel } = require('./DepartmentModel')
 
@@ -6,9 +7,11 @@ class DepartmentRepository extends IDepartmentRepository {
         super()
     }
 
-    async getAll() {
+    async getAll(filters) {
         try {
-            return await DepartmentModel.findAll();
+            return await DepartmentModel.findAll({
+                where: DepartmentQueryFilter(filters)
+            });
         }
         catch (err) {
             throw new Error(err.message)

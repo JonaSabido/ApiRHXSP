@@ -7,8 +7,8 @@ class DiseaseService {
         this.iDiseaseRepository = iDiseaseRepository
     }
 
-    async getAllDiseases() {
-        return await this.iDiseaseRepository.getAll();
+    async getAllDiseases(filters) {
+        return await this.iDiseaseRepository.getAll(filters);
     }
 
     async getDiseaseById(id) {

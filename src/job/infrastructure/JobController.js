@@ -6,7 +6,7 @@ const jobRepository = new JobRepository();
 const jobService = new JobService(jobRepository);
 
 const getAll = async (request, response) => {
-    const data = await jobService.getAllJobs()
+    const data = await jobService.getAllJobs(request.query)
     if (data.length) {
         return SendSuccessData(response, 200, data, 'Ok')
     }

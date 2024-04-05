@@ -7,8 +7,8 @@ class JobService {
         this.iJobRepository = iJobRepository
     }
 
-    async getAllJobs() {
-        return await this.iJobRepository.getAll();
+    async getAllJobs(filters) {
+        return await this.iJobRepository.getAll(filters);
     }
 
     async getJobById(id) {

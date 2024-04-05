@@ -1,6 +1,7 @@
 const IJobRepository = require('../domain/IJobRepository');
 const { JobModel } = require('./JobModel')
 const { AreaModel } = require('../../area/infrastructure/AreaModel');
+const { JobQueryFilter } = require('../../../helpers/QueryFilters');
 
 
 const relations = [
@@ -16,9 +17,12 @@ class JobRepository extends IJobRepository {
         super()
     }
 
-    async getAll() {
+    async getAll(filters) {
         try {
-            return await JobModel.findAll({include: relations});
+            return await JobModel.findAll({
+                where: JobQueryFilter(filters),
+                include: relations
+            });
         }
         catch (err) {
             throw new Error(err.message)
@@ -27,7 +31,7 @@ class JobRepository extends IJobRepository {
 
     async getById(id) {
         try {
-            const entity = await JobModel.findByPk(id, {include: relations})
+            const entity = await JobModel.findByPk(id, { include: relations })
             if (!entity) {
                 throw new Error('Entity not found')
             }

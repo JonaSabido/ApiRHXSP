@@ -7,8 +7,8 @@ class EmployeeLeaveService {
         this.iEmployeeLeaveRepository = iEmployeeLeaveRepository
     }
 
-    async getAllEmployeeLeaves() {
-        return await this.iEmployeeLeaveRepository.getAll();
+    async getAllEmployeeLeaves(filters) {
+        return await this.iEmployeeLeaveRepository.getAll(filters);
     }
 
     async getEmployeeLeaveById(id) {

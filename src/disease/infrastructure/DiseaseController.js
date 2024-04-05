@@ -6,7 +6,7 @@ const diseaseRepository = new DiseaseRepository();
 const diseaseService = new DiseaseService(diseaseRepository);
 
 const getAll = async (request, response) => {
-    const data = await diseaseService.getAllDiseases()
+    const data = await diseaseService.getAllDiseases(request.query)
     if (data.length) {
         return SendSuccessData(response, 200, data, 'Ok')
     }

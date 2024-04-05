@@ -1,6 +1,7 @@
 const IContractRepository = require('../domain/IContractRepository');
 const { ContractModel } = require('./ContractModel')
 const { EmployeeModel } = require('../../employee/infrastructure/EmployeeModel');
+const { ContractQueryFilter } = require('../../../helpers/QueryFilters');
 
 
 const relations = [
@@ -18,7 +19,10 @@ class ContractRepository extends IContractRepository {
 
     async getAll() {
         try {
-            return await ContractModel.findAll({ include: relations });
+            return await ContractModel.findAll({
+                include: relations,
+                where: ContractQueryFilter(filters)
+            });
         }
         catch (err) {
             throw new Error(err.message)

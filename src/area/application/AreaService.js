@@ -7,8 +7,8 @@ class AreaService {
         this.iAreaRepository = iAreaRepository
     }
 
-    async getAllAreas() {
-        return await this.iAreaRepository.getAll();
+    async getAllAreas(filters) {
+        return await this.iAreaRepository.getAll(filters);
     }
 
     async getAreaById(id) {

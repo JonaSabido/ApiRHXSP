@@ -1,6 +1,7 @@
 const IEmployeeLeaveRepository = require('../domain/IEmployeeLeaveRepository');
 const { EmployeeLeaveModel } = require('./EmployeeLeaveModel')
 const { EmployeeModel } = require('../../employee/infrastructure/EmployeeModel');
+const { EmployeeLeaveQueryFilter } = require('../../../helpers/QueryFilters');
 
 
 const relations = [
@@ -16,9 +17,12 @@ class EmployeeLeaveRepository extends IEmployeeLeaveRepository {
         super()
     }
 
-    async getAll() {
+    async getAll(filters) {
         try {
-            return await EmployeeLeaveModel.findAll({ include: relations });
+            return await EmployeeLeaveModel.findAll({
+                include: relations,
+                where: EmployeeLeaveQueryFilter(filters)
+            });
         }
         catch (err) {
             throw new Error(err.message)

@@ -6,7 +6,7 @@ const areaRepository = new AreaRepository();
 const areaService = new AreaService(areaRepository);
 
 const getAll = async (request, response) => {
-    const data = await areaService.getAllAreas()
+    const data = await areaService.getAllAreas(request.query)
     if (data.length) {
         return SendSuccessData(response, 200, data, 'Ok')
     }

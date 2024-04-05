@@ -6,7 +6,7 @@ const employeeReentryRepository = new EmployeeReentryRepository();
 const employeeReentryService = new EmployeeReentryService(employeeReentryRepository);
 
 const getAll = async (request, response) => {
-    const data = await employeeReentryService.getAllEmployeeReentries()
+    const data = await employeeReentryService.getAllEmployeeReentries(request.query)
     if (data.length) {
         return SendSuccessData(response, 200, data, 'Ok')
     }

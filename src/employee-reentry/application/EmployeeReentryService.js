@@ -7,8 +7,8 @@ class EmployeeReentryService {
         this.iEmployeeReentryRepository = iEmployeeReentryRepository
     }
 
-    async getAllEmployeeReentries() {
-        return await this.iEmployeeReentryRepository.getAll();
+    async getAllEmployeeReentries(filters) {
+        return await this.iEmployeeReentryRepository.getAll(filters);
     }
 
     async getEmployeeReentryById(id) {

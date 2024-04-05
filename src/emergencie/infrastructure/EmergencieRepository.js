@@ -1,6 +1,7 @@
 const IEmergencieRepository = require('../domain/IEmergencieRepository');
 const { EmergencieModel } = require('./EmergencieModel')
 const { EmployeeModel } = require('../../employee/infrastructure/EmployeeModel');
+const { EmergencyQueryFilter } = require('../../../helpers/QueryFilters');
 
 
 const relations = [
@@ -16,9 +17,12 @@ class EmergencieRepository extends IEmergencieRepository {
         super()
     }
 
-    async getAll() {
+    async getAll(filters) {
         try {
-            return await EmergencieModel.findAll({ include: relations });
+            return await EmergencieModel.findAll({
+                include: relations,
+                where: EmergencyQueryFilter(filters)
+            });
         }
         catch (err) {
             throw new Error(err.message)

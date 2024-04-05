@@ -6,7 +6,7 @@ const employeeLeaveRepository = new EmployeeLeaveRepository();
 const employeeLeaveService = new EmployeeLeaveService(employeeLeaveRepository);
 
 const getAll = async (request, response) => {
-    const data = await employeeLeaveService.getAllEmployeeLeaves()
+    const data = await employeeLeaveService.getAllEmployeeLeaves(request.query)
     if (data.length) {
         return SendSuccessData(response, 200, data, 'Ok')
     }

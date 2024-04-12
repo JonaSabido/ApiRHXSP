@@ -11,7 +11,7 @@ const getAll = async (request, response) => {
     if (data.length) {
         const list = []
         data.forEach(element => {
-            const newDTO = new EmployeeResponseDTO(element)    
+            const newDTO = new EmployeeResponseDTO(element)
             list.push(newDTO)
         });
         return SendSuccessData(response, 200, list, 'Ok')
@@ -66,11 +66,23 @@ const deleteById = async (request, response) => {
     }
 }
 
+const saveFiles = async (request, response) => {
+    const id = request.params.id
+    const files = request.files
+    try {
+        const newFiles = await employeeService.saveFiles(id, files)
+        return SendSuccessData(response, 200, newFiles, 'Ok')
+    }
+    catch (err) {
+        return SendErrorData(response, 500, null, err.message)
+    }
+}
 
 module.exports = {
     getAll,
     getById,
     create,
     updateById,
-    deleteById
+    deleteById,
+    saveFiles,
 };

@@ -2,9 +2,11 @@ const EmployeeReentry = require("../domain/EmployeeReentry");
 
 class EmployeeReentryService {
     constructor(
-        iEmployeeReentryRepository
+        iEmployeeReentryRepository,
+        iEmployeeRepository
     ) {
         this.iEmployeeReentryRepository = iEmployeeReentryRepository
+        this.iEmployeeRepository = iEmployeeRepository
     }
 
     async getAllEmployeeReentries(filters) {
@@ -26,6 +28,7 @@ class EmployeeReentryService {
 
     async createEmployeeReentry(data) {
         const newEntity = await this.iEmployeeReentryRepository.create(data)
+        await this.iEmployeeRepository.changeStatus(newEntity.id_employee, 1)
         return new EmployeeReentry(
             newEntity.id,
             newEntity.id_employee,

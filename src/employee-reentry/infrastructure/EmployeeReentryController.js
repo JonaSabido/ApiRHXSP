@@ -1,9 +1,13 @@
 const { SendSuccessData, SendErrorData } = require('../../../helpers/ApiResponse');
 const EmployeeReentryService = require('../application/EmployeeReentryService');
 const EmployeeReentryRepository = require('./EmployeeReentryRepository');
+const EmployeeRepository = require('../../employee/infrastructure/EmployeeRepository');
+
 
 const employeeReentryRepository = new EmployeeReentryRepository();
-const employeeReentryService = new EmployeeReentryService(employeeReentryRepository);
+const employeeRepository = new EmployeeRepository();
+
+const employeeReentryService = new EmployeeReentryService(employeeReentryRepository, employeeRepository);
 
 const getAll = async (request, response) => {
     const data = await employeeReentryService.getAllEmployeeReentries(request.query)

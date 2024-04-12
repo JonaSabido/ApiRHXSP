@@ -1,7 +1,7 @@
 const IRecommendationPaymentRepository = require('../domain/IRecommendationPaymentRepository');
 const { RecommendationPaymentModel } = require('./RecommendationPaymentModel')
 const { EmployeeModel } = require('../../employee/infrastructure/EmployeeModel');
-const { RecommendationModel} = require('../../recommendation/infrastructure/RecommendationModel');
+const { RecommendationModel } = require('../../recommendation/infrastructure/RecommendationModel');
 
 
 const relations = [
@@ -11,8 +11,8 @@ const relations = [
         as: 'employee'
     },
     {
-        model:  RecommendationModel,
-        attributes: ['id','id_employee','id_recommended_employee'],
+        model: RecommendationModel,
+        attributes: ['id', 'id_employee', 'id_recommended_employee', 'amount'],
         as: 'recommendation'
     }
 ]

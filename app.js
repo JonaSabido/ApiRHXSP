@@ -19,13 +19,17 @@ const employeeVacationRoute = require('./src/employee_vacation/infrastructure/Em
 const recommendationRoute = require('./src/recommendation/infrastructure/RecommendationRoute.js')
 const recommendationPaymentRoute = require('./src/recommendation_payment/infrastructure/RecommendationPaymentRoute.js')
 const userRoute = require('./src/user/infrastructure/UserRoute.js')
-const authRoute = require('./src/auth/infrastructure/AuthRoute.js')
+const authRoute = require('./src/auth/infrastructure/AuthRoute.js');
+const fileUpload = require('express-fileupload');
 
 
 
 
 app.use(cors());
 app.use(express.json({ limit: '10mb' }))
+app.use(fileUpload({
+    createParentPath: true
+}))
 
 app.use('/api',
     authRoute, areaRoute, jobRoute, departmentRoute, employeeRoute,
@@ -33,6 +37,8 @@ app.use('/api',
     typeAbsenceRoute, absenceRoute, employeeReentryRoute, employeeLeavesRoute, vacationTimesRoute,
     employeeVacationRoute, recommendationRoute, recommendationPaymentRoute, userRoute
 )
+
+app.use('/uploads', express.static('uploads'));
 
 app.listen(PORT, () => {
     console.log('Servidor escuchando en el puerto ' + PORT);

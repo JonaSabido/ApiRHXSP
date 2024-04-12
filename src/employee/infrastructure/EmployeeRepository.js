@@ -23,7 +23,10 @@ class EmployeeRepository extends IEmployeeRepository {
 
     async getAll() {
         try {
-            return await EmployeeModel.findAll({ include: relations });
+            return await EmployeeModel.findAll({
+                include: relations,
+                order: [['id', 'DESC'],]
+            });
         }
         catch (err) {
             throw new Error(err.message)
@@ -76,6 +79,32 @@ class EmployeeRepository extends IEmployeeRepository {
         }
         catch (err) {
             throw new Error(err.message)
+        }
+    }
+
+    async changeStatus(id, status) {
+        try {
+            return await EmployeeModel.update(
+                { status: status }, {
+                where: {
+                    id: id
+                }
+            })
+        }
+        catch (err) {
+            throw new Error(err.message)
+        }
+    }
+
+    async saveFiles(id, files) {
+        const path = 'uploads/employees/'
+        if (files.birth_certificate) {
+            let file = files.birth_certificate
+            file.mv(path + id + '/birth_certificate.pdf')
+        }
+        if (files.identification) {
+            let file = files.identification
+            file.mv(path + id + '/identification.pdf')
         }
     }
 }

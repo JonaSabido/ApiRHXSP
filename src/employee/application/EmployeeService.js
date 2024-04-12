@@ -87,6 +87,12 @@ class EmployeeService {
         return await this.iEmployeeRepository.delete(id)
     }
 
+    async saveFiles(id, files) {
+        await this.iEmployeeRepository.getById(id);
+        const newFiles = await this.iEmployeeRepository.saveFiles(id, files)
+        return 'Success'
+    }
+
 }
 
 module.exports = EmployeeService

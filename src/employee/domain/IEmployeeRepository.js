@@ -18,6 +18,14 @@ class IEmployeeRepository {
   async delete(id) {
     throw new Error('Method not implemented');
   }
+
+  async changeStatus(id, status) {
+    throw new Error('Method not implemented');
+  }
+
+  async saveFiles(id, files) {
+    throw new Error('Method not implemented');
+  }
 }
 
 module.exports = IEmployeeRepository;

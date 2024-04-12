@@ -1,9 +1,14 @@
 const { SendSuccessData, SendErrorData } = require('../../../helpers/ApiResponse');
-const RecommendationService = require('../application/RecommendationService');
 const RecommendationRepository = require('./RecommendationRepository');
+const RecommendationPaymentRepository = require('../../recommendation_payment/infrastructure/RecommendationPaymentRepository');
+const RecommendationService = require('../application/RecommendationService');
 
 const recommendationRepository = new RecommendationRepository();
-const recommendationService = new RecommendationService(recommendationRepository);
+const recommendationPaymentRepository = new RecommendationPaymentRepository();
+
+const recommendationService = new RecommendationService(recommendationRepository, recommendationPaymentRepository);
+
+
 
 const getAll = async (request, response) => {
     const data = await recommendationService.getAllRecommendations()

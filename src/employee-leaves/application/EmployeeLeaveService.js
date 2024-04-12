@@ -2,9 +2,12 @@ const EmployeeLeave = require("../domain/EmployeeLeave");
 
 class EmployeeLeaveService {
     constructor(
-        iEmployeeLeaveRepository
+        iEmployeeLeaveRepository,
+        iEmployeeRepository
     ) {
         this.iEmployeeLeaveRepository = iEmployeeLeaveRepository
+        this.iEmployeeRepository = iEmployeeRepository
+
     }
 
     async getAllEmployeeLeaves(filters) {
@@ -26,6 +29,7 @@ class EmployeeLeaveService {
 
     async createEmployeeLeave(data) {
         const newEntity = await this.iEmployeeLeaveRepository.create(data)
+        await this.iEmployeeRepository.changeStatus(newEntity.id_employee, 0)
         return new EmployeeLeave(
             newEntity.id,
             newEntity.id_employee,

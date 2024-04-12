@@ -29,6 +29,8 @@ class EmployeeResponseDTO {
         this.cp = employee.cp;
         this.qr_image = employee.qr_image;
         this.status = employee.status;
+        this.path_birth_certificate = `http://localhost:3000/uploads/employees/${employee.id}/birth_certificate.pdf`
+        this.path_identification = `http://localhost:3000/uploads/employees/${employee.id}/identification.pdf`
         this.createdAt = employee.createdAt;
         this.updatedAt = employee.updatedAt;
         this.department = employee.department;

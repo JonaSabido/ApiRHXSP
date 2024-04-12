@@ -17,7 +17,7 @@ class ContractRepository extends IContractRepository {
         super()
     }
 
-    async getAll() {
+    async getAll(filters) {
         try {
             return await ContractModel.findAll({
                 include: relations,

@@ -98,6 +98,7 @@ class EmployeeRepository extends IEmployeeRepository {
 
     async saveFiles(id, files) {
         const path = 'uploads/employees/'
+
         if (files.birth_certificate) {
             let file = files.birth_certificate
             file.mv(path + id + '/birth_certificate.pdf')
@@ -105,6 +106,50 @@ class EmployeeRepository extends IEmployeeRepository {
         if (files.identification) {
             let file = files.identification
             file.mv(path + id + '/identification.pdf')
+        }
+        if (files.curp) {
+            let file = files.curp
+            file.mv(path + id + '/curp.pdf')
+        }
+        if (files.nss) {
+            let file = files.nss
+            file.mv(path + id + '/nss.pdf')
+        }
+        if (files.address_certification) {
+            let file = files.address_certification
+            file.mv(path + id + '/address_certification.pdf')
+        }
+        if (files.studies_certification) {
+            let file = files.studies_certification
+            file.mv(path + id + '/studies_certification.pdf')
+        }
+        if (files.tax_certificate) {
+            let file = files.tax_certificate
+            file.mv(path + id + '/tax_certificate.pdf')
+        }
+        if (files.smn) {
+            let file = files.smn
+            file.mv(path + id + '/smn.pdf')
+        }
+        if (files.no_criminal_certificate) {
+            let file = files.no_criminal_certificate
+            file.mv(path + id + '/no_criminal_certificate.pdf')
+        }
+        if (files.health_certificate) {
+            let file = files.health_certificate
+            file.mv(path + id + '/health_certificate.pdf')
+        }
+        if (files.sv) {
+            let file = files.sv
+            file.mv(path + id + '/sv.pdf')
+        }
+        if (files.employee_image) {
+            let file = files.employee_image
+            file.mv(path + id + '/employee_image.jpg')
+        }
+        if (files.qr_image) {
+            let file = files.qr_image
+            file.mv(path + id + '/qr_image.jpg')
         }
     }
 }

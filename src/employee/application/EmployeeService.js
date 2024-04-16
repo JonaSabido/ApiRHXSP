@@ -36,7 +36,6 @@ class EmployeeService {
             entity.has_children,
             entity.address,
             entity.cp,
-            entity.qr_image,
             entity.status,
             entity.createdAt,
             entity.updatedAt,
@@ -70,7 +69,6 @@ class EmployeeService {
             newEntity.has_children,
             newEntity.address,
             newEntity.cp,
-            newEntity.qr_image,
             newEntity.createdAt,
             newEntity.updatedAt
         );

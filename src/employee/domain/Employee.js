@@ -22,7 +22,6 @@ class Employee {
         has_children,
         address,
         cp,
-        qr_image,
         status,
         createdAt,
         updatedAt,
@@ -51,7 +50,6 @@ class Employee {
         this.has_children = has_children;
         this.address = address;
         this.cp = cp;
-        this.qr_image = qr_image;
         this.status = status;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;

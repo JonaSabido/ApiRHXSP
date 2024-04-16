@@ -32,8 +32,13 @@ const getById = async (request, response) => {
 
 const create = async (request, response) => {
     const data = request.body
+    const files = request.files
+
     try {
         const newEntity = await employeeService.createEmployee(data)
+        if (files) {
+            await employeeService.saveFiles(newEntity.id, files)
+        }
         return SendSuccessData(response, 201, newEntity, 'Created')
     }
     catch (err) {
@@ -43,9 +48,14 @@ const create = async (request, response) => {
 
 const updateById = async (request, response) => {
     const data = request.body
+    const files = request.files
     const id = request.params.id
+
     try {
         const updatedEntity = await employeeService.updateEmployee(id, data)
+        if (files) {
+            await employeeService.saveFiles(id, files)
+        }
         return SendSuccessData(response, 200, updatedEntity, 'Updated')
     }
     catch (err) {

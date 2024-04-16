@@ -90,10 +90,6 @@ const EmployeeModel = connection.define('employee', {
         type: DataTypes.STRING,
         allowNull: true,
     },
-    qr_image: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
     status: {
         type: DataTypes.BOOLEAN,
         allowNull: false,

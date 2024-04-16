@@ -1,3 +1,5 @@
+const FileNameResponseDTO = require("./FileResponseDTO");
+
 class EmployeeResponseDTO {
     constructor(
         employee
@@ -27,10 +29,8 @@ class EmployeeResponseDTO {
         this.has_children = employee.has_children;
         this.address = employee.address;
         this.cp = employee.cp;
-        this.qr_image = employee.qr_image;
         this.status = employee.status;
-        this.path_birth_certificate = `https://apirhxsp.onrender.com/uploads/employees/${employee.id}/birth_certificate.pdf`
-        this.path_identification = `https://apirhxsp.onrender.com/employees/${employee.id}/identification.pdf`
+        this.files = new FileNameResponseDTO(employee.id)
         this.createdAt = employee.createdAt;
         this.updatedAt = employee.updatedAt;
         this.department = employee.department;

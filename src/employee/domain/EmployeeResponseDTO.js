@@ -1,4 +1,4 @@
-const FileNameResponseDTO = require("./FileResponseDTO");
+const EmployeeFileNameResponseDTO = require("./EmployeeFileNameResponseDTO");
 
 class EmployeeResponseDTO {
     constructor(
@@ -7,14 +7,15 @@ class EmployeeResponseDTO {
         this.id = employee.id;
         this.id_department = employee.id_department;
         this.id_job = employee.id_job;
+        this.id_recruitment_method = employee.id_recruitment_method;
         this.code = employee.code;
         this.full_name = `${employee.name} ${employee.sure_name} ${employee.last_name}`;
         this.name = employee.name;
         this.sure_name = employee.sure_name;
         this.last_name = employee.last_name;
         this.entry_date = employee.entry_date;
-        this.entry_month = this.getMonth(parseInt(employee.entry_date.slice(5, 7)))
-        this.entry_year = employee.entry_date.slice(0, 4)
+        this.entry_month = this.getMonth(parseInt(employee.entry_date?.slice(5, 7)))
+        this.entry_year = employee.entry_date?.slice(0, 4)
         this.gender = employee.gender;
         this.nss = employee.nss;
         this.rfc = employee.rfc;
@@ -29,12 +30,15 @@ class EmployeeResponseDTO {
         this.has_children = employee.has_children;
         this.address = employee.address;
         this.cp = employee.cp;
+        this.comments = employee.comments;
         this.status = employee.status;
-        this.files = new FileNameResponseDTO(employee.id)
+        this.files = new EmployeeFileNameResponseDTO(employee.id)
         this.createdAt = employee.createdAt;
         this.updatedAt = employee.updatedAt;
         this.department = employee.department;
         this.job = employee.job;
+        this.recruitment_method = employee.recruitment_method;
+
     }
 
     getMonth(number) {

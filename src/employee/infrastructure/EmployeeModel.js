@@ -2,6 +2,7 @@ const { DataTypes } = require('sequelize')
 const { connection } = require('../../../config.db')
 const { JobModel } = require('../../job/infrastructure/JobModel')
 const { DepartmentModel } = require('../../department/infrastructure/DepartmentModel')
+const { RecruitmentMethodModel } = require('../../recruitment-method/infrastructure/RecruitmentMethodModel')
 
 
 
@@ -11,6 +12,10 @@ const EmployeeModel = connection.define('employee', {
         allowNull: false
     },
     id_job: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
+    id_recruitment_method: {
         type: DataTypes.INTEGER,
         allowNull: false
     },
@@ -90,6 +95,10 @@ const EmployeeModel = connection.define('employee', {
         type: DataTypes.STRING,
         allowNull: true,
     },
+    comments: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
     status: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
@@ -98,7 +107,7 @@ const EmployeeModel = connection.define('employee', {
 
 EmployeeModel.belongsTo(JobModel, { as: 'job', foreignKey: 'id_job' })
 EmployeeModel.belongsTo(DepartmentModel, { as: 'department', foreignKey: 'id_department' })
-
+EmployeeModel.belongsTo(RecruitmentMethodModel, { as: 'recruitment_method', foreignKey: 'id_recruitment_method' })
 
 module.exports = {
     EmployeeModel

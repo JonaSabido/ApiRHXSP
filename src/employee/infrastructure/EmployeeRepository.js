@@ -2,6 +2,7 @@ const IEmployeeRepository = require('../domain/IEmployeeRepository');
 const { EmployeeModel } = require('./EmployeeModel')
 const { DepartmentModel } = require('../../department/infrastructure/DepartmentModel');
 const { JobModel } = require('../../job/infrastructure/JobModel');
+const { RecruitmentMethodModel } = require('../../recruitment-method/infrastructure/RecruitmentMethodModel');
 
 const relations = [
     {
@@ -13,6 +14,11 @@ const relations = [
         model: JobModel,
         attributes: ['id', 'id_area', 'name'],
         as: 'job'
+    },
+    {
+        model: RecruitmentMethodModel,
+        attributes: ['id', 'name'],
+        as: 'recruitment_method'
     },
 ]
 

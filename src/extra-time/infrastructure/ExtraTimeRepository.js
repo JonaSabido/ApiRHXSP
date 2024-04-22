@@ -1,39 +1,26 @@
-const IAbsenceRepository = require('../domain/IAbsenceRepository');
-const { AbsenceModel } = require('./AbsenceModel')
+const { ExtraTimeQueryFilter } = require('../../../helpers/QueryFilters');
 const { EmployeeModel } = require('../../employee/infrastructure/EmployeeModel');
-const { JobModel } = require('../../job/infrastructure/JobModel');
-const { TypeAbsenceModel } = require('../../type-absence/infrastructure/TypeAbsenceModel');
-const { AbsenceQueryFilter } = require('../../../helpers/QueryFilters');
-
+const IExtraTimeRepository = require('../domain/IExtraTimeRepository');
+const { ExtraTimeModel } = require('./ExtraTimeModel')
 
 const relations = [
-    {
-        model: TypeAbsenceModel,
-        attributes: ['id', 'name'],
-        as: 'type_absence'
-    },
     {
         model: EmployeeModel,
         attributes: ['id', 'name', 'sure_name', 'last_name'],
         as: 'employee'
     },
-    {
-        model: JobModel,
-        attributes: ['id', 'id_area', 'name',],
-        as: 'job'
-    }
 ]
 
-class AbsenceRepository extends IAbsenceRepository {
+class ExtraTimeRepository extends IExtraTimeRepository {
     constructor() {
         super()
     }
 
-    async getAll() {
+    async getAll(filters) {
         try {
-            return await AbsenceModel.findAll({
-                where: AbsenceQueryFilter(filters),
-                include: relations
+            return await ExtraTimeModel.findAll({
+                include: relations,
+                where: ExtraTimeQueryFilter(filters)
             });
         }
         catch (err) {
@@ -43,7 +30,7 @@ class AbsenceRepository extends IAbsenceRepository {
 
     async getById(id) {
         try {
-            const entity = await AbsenceModel.findByPk(id, { include: relations })
+            const entity = await ExtraTimeModel.findByPk(id, { include: relations, })
             if (!entity) {
                 throw new Error('Entity not found')
             }
@@ -56,9 +43,7 @@ class AbsenceRepository extends IAbsenceRepository {
 
     async create(data) {
         try {
-            const employee = await EmployeeModel.findByPk(data.id_employee);
-            data.id_job = employee.id_job;
-            return await AbsenceModel.create(data)
+            return await ExtraTimeModel.create(data)
         }
         catch (err) {
             throw new Error(err.message)
@@ -67,7 +52,7 @@ class AbsenceRepository extends IAbsenceRepository {
 
     async update(id, data) {
         try {
-            return await AbsenceModel.update(data, {
+            return await ExtraTimeModel.update(data, {
                 where: {
                     id: id
                 }
@@ -80,7 +65,7 @@ class AbsenceRepository extends IAbsenceRepository {
 
     async delete(id) {
         try {
-            return await AbsenceModel.destroy(
+            return await ExtraTimeModel.destroy(
                 {
                     where: {
                         id: id
@@ -91,6 +76,14 @@ class AbsenceRepository extends IAbsenceRepository {
             throw new Error(err.message)
         }
     }
+
+    async saveFiles(id, files) {
+        const path = 'uploads/extra-times/'
+        if (files.evidence) {
+            let file = files.evidence
+            file.mv(path + id + '/evidence.pdf')
+        }
+    }
 }
 
-module.exports = AbsenceRepository;
+module.exports = ExtraTimeRepository;

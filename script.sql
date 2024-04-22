@@ -257,7 +257,15 @@ CREATE TABLE users (
     createdAt TIMESTAMP NULL DEFAULT NULL,
     updatedAt TIMESTAMP NULL DEFAULT NULL,
     PRIMARY KEY(id)
-)
+);
+
+CREATE TABLE recruitment_methods (
+    id INT AUTO_INCREMENT NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    createdAt TIMESTAMP NULL DEFAULT NULL,
+    updatedAt TIMESTAMP NULL DEFAULT NULL,
+    PRIMARY KEY (id)
+);
 
 ALTER TABLE employee_diseases DROP COLUMN name;
 ALTER TABLE employee_diseases ADD COLUMN id_disease INT NOT NULL AFTER id_employee;
@@ -271,4 +279,18 @@ ALTER TABLE recommendations drop column second_payment_date;
 ALTER TABLE recommendation_payments ADD COLUMN status INT NOT NULL AFTER payment_date;
 
 ALTER TABLE employees drop column qr_image;
+
+ALTER TABLE antidopings drop column photo;
+ALTER TABLE antidopings drop column path;
+
+ALTER TABLE trainings drop column path;
+
+ALTER TABLE extra_times drop column path;
+
+ALTER TABLE employees ADD COLUMN comments varchar(500) NULL AFTER cp;
+
+ALTER TABLE employees ADD COLUMN id_recruitment_method INT NULL AFTER id_job;
+ALTER TABLE employees ADD FOREIGN KEY (id_recruitment_method) REFERENCES recruitment_methods(id);
+ 
+
 

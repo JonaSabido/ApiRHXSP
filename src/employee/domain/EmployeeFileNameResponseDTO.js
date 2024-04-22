@@ -1,6 +1,7 @@
 const fs = require('fs');
+const { SERVER_URL } = require('../../../config');
 
-class FileNameResponseDTO {
+class EmployeeFileNameResponseDTO {
     constructor(idEmployee) {
         this.birth_certificate = this.checkFile(`uploads/employees/${idEmployee}/birth_certificate.pdf`);
         this.identification = this.checkFile(`uploads/employees/${idEmployee}/identification.pdf`);
@@ -19,11 +20,11 @@ class FileNameResponseDTO {
 
     checkFile(filePath) {
         try {
-            return fs.existsSync(filePath) ? `http://localhost:3000/${filePath}` : null;
+            return fs.existsSync(filePath) ? `${SERVER_URL}/${filePath}` : null;
         } catch (error) {
             return null;
         }
     }
 }
 
-module.exports = FileNameResponseDTO
+module.exports = EmployeeFileNameResponseDTO

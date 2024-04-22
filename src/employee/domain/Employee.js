@@ -3,6 +3,7 @@ class Employee {
         id,
         id_department,
         id_job,
+        id_recruitment_method,
         code,
         name,
         sure_name,
@@ -22,15 +23,18 @@ class Employee {
         has_children,
         address,
         cp,
+        comments,
         status,
         createdAt,
         updatedAt,
         department,
         job,
+        recruitment_method,
     ) {
         this.id = id;
         this.id_department = id_department;
         this.id_job = id_job;
+        this.id_recruitment_method = id_recruitment_method;
         this.code = code;
         this.name = name;
         this.sure_name = sure_name;
@@ -50,11 +54,13 @@ class Employee {
         this.has_children = has_children;
         this.address = address;
         this.cp = cp;
+        this.comments = comments;
         this.status = status;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.department = department;
         this.job = job;
+        this.recruitment_method = recruitment_method;
     }
 }
 

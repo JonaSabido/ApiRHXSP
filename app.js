@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const fileUpload = require('express-fileupload');
+
 const { PORT } = require('./config');
 const areaRoute = require('./src/area/infrastructure/AreaRoute')
 const jobRoute = require('./src/job/infrastructure/JobRoute')
@@ -18,9 +20,16 @@ const vacationTimesRoute = require('./src/vacationtime/infrastructure/VacationTi
 const employeeVacationRoute = require('./src/employee_vacation/infrastructure/EmployeeVacationRoute')
 const recommendationRoute = require('./src/recommendation/infrastructure/RecommendationRoute.js')
 const recommendationPaymentRoute = require('./src/recommendation_payment/infrastructure/RecommendationPaymentRoute.js')
+const antidopingRoute = require('./src/antidoping/infrastructure/AntidopingRoute.js')
+const trainingRoute = require('./src/training/infrastructure/TrainingRoute.js')
+const extraTimeRoute = require('./src/extra-time/infrastructure/ExtraTimeRoute.js')
+const recruitmentMethodRoute = require('./src/recruitment-method/infrastructure/RecruitmentMethodRoute.js')
+
+
+
+
 const userRoute = require('./src/user/infrastructure/UserRoute.js')
 const authRoute = require('./src/auth/infrastructure/AuthRoute.js');
-const fileUpload = require('express-fileupload');
 
 
 
@@ -34,8 +43,9 @@ app.use(fileUpload({
 app.use('/api',
     authRoute, areaRoute, jobRoute, departmentRoute, employeeRoute,
     emergencieRoute, contractRoute, diseaseRoute, employeeDiseasetRoute,
-    typeAbsenceRoute, absenceRoute, employeeReentryRoute, employeeLeavesRoute, vacationTimesRoute,
-    employeeVacationRoute, recommendationRoute, recommendationPaymentRoute, userRoute
+    typeAbsenceRoute, absenceRoute, employeeReentryRoute, employeeLeavesRoute,
+    vacationTimesRoute, employeeVacationRoute, recommendationRoute, recommendationPaymentRoute,
+    userRoute, antidopingRoute, trainingRoute, extraTimeRoute, recruitmentMethodRoute
 )
 
 app.use('/uploads', express.static('uploads'));

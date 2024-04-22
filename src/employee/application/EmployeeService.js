@@ -17,6 +17,7 @@ class EmployeeService {
             entity.id,
             entity.id_department,
             entity.id_job,
+            entity.id_recruitment_method,
             entity.code,
             entity.name,
             entity.sure_name,
@@ -36,11 +37,13 @@ class EmployeeService {
             entity.has_children,
             entity.address,
             entity.cp,
+            entity.comments,
             entity.status,
             entity.createdAt,
             entity.updatedAt,
             entity.department,
-            entity.job
+            entity.job,
+            entity.recruitment_method
         );
     }
 
@@ -50,6 +53,7 @@ class EmployeeService {
             newEntity.id,
             newEntity.id_department,
             newEntity.id_job,
+            newEntity.id_recruitment_method,
             newEntity.code,
             newEntity.name,
             newEntity.sure_name,
@@ -69,6 +73,8 @@ class EmployeeService {
             newEntity.has_children,
             newEntity.address,
             newEntity.cp,
+            newEntity.comments,
+            newEntity.status,
             newEntity.createdAt,
             newEntity.updatedAt
         );

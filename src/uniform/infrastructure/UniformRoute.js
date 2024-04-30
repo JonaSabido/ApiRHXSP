@@ -1,11 +1,10 @@
 const express = require('express');
-const { getAll, getById, create, updateById, deleteById, getByGroup } = require('./AbsenceController');
+const { getAll, getById, create, updateById, deleteById } = require('./UniformController');
 
 const api = express.Router();
-const uri = '/absences'
+const uri = '/uniforms'
 
 api.get(uri, getAll)
-api.get(`${uri}/group`, getByGroup)
 api.get(`${uri}/:id`, getById)
 api.post(uri, create)
 api.put(`${uri}/:id`, updateById)

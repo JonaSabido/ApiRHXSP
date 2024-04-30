@@ -49,6 +49,12 @@ class ContractContractService {
         return await this.iContractRepository.delete(id)
     }
 
+    async saveFiles(id, files) {
+        await this.iContractRepository.getById(id);
+        const newFiles = await this.iContractRepository.saveFiles(id, files)
+        return 'Success'
+    }
+
 }
 
 module.exports = ContractContractService

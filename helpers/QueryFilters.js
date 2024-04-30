@@ -217,19 +217,50 @@ const AbsenceQueryFilter = (filters) => {
         queryFilters.id_type_absence = filters.id_type_absence
     }
 
+    if (filters.id_job) {
+        queryFilters.id_job = filters.id_job
+    }
+
     if (filters.year) {
-        queryFilters.reentry_date = {
+        queryFilters.date = {
             [Op.gte]: new Date(`${filters.year}-01-01`).setUTCHours(0),
             [Op.lte]: new Date(`${filters.year}-12-31`).setUTCHours(0),
         }
     }
 
     if (filters.start_date || filters.end_date) {
-        queryFilters.reentry_date = {
+        queryFilters.date = {
             [Op.gte]: new Date(filters.start_date ?? '0001-01-01').setUTCHours(0),
             [Op.lte]: new Date(filters.end_date ?? '9999-12-31').setUTCHours(0),
         }
     }
+    return queryFilters;
+}
+
+const UniformQueryFilter = (filters) => {
+    const queryFilters = {}
+    if (filters.id_employee) {
+        queryFilters.id_employee = filters.id_employee
+    }
+
+    if (filters.type) {
+        queryFilters.type = filters.type
+    }
+
+    if (filters.year) {
+        queryFilters.delivered_date = {
+            [Op.gte]: new Date(`${filters.year}-01-01`).setUTCHours(0),
+            [Op.lte]: new Date(`${filters.year}-12-31`).setUTCHours(0),
+        }
+    }
+
+    if (filters.start_date || filters.end_date) {
+        queryFilters.delivered_date = {
+            [Op.gte]: new Date(filters.start_date ?? '0001-01-01').setUTCHours(0),
+            [Op.lte]: new Date(filters.end_date ?? '9999-12-31').setUTCHours(0),
+        }
+    }
+
     return queryFilters;
 }
 
@@ -248,5 +279,6 @@ module.exports = {
     TrainingQueryFilter,
     ExtraTimeQueryFilter,
     RecruitmentMethodQueryFilter,
-    AbsenceQueryFilter
+    AbsenceQueryFilter,
+    UniformQueryFilter
 }

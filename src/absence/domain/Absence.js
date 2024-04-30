@@ -6,7 +6,6 @@ class Absence {
         id_job,
         date,
         description,
-        path,
         createdAt,
         updatedAt,
         type_absence,
@@ -19,7 +18,6 @@ class Absence {
         this.id_job = id_job;
         this.date = date;
         this.description = description;
-        this.path = path;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.type_absence = type_absence;

@@ -1,7 +1,7 @@
-const IContractRepository = require('../domain/IContractRepository');
-const { ContractModel } = require('./ContractModel')
+const IUniformRepository = require('../domain/IUniformRepository');
+const { UniformModel } = require('./UniformModel')
 const { EmployeeModel } = require('../../employee/infrastructure/EmployeeModel');
-const { ContractQueryFilter } = require('../../../helpers/QueryFilters');
+const { UniformQueryFilter } = require('../../../helpers/QueryFilters');
 
 
 const relations = [
@@ -12,16 +12,16 @@ const relations = [
     },
 ]
 
-class ContractRepository extends IContractRepository {
+class UniformRepository extends IUniformRepository {
     constructor() {
         super()
     }
 
     async getAll(filters) {
         try {
-            return await ContractModel.findAll({
+            return await UniformModel.findAll({
                 include: relations,
-                where: ContractQueryFilter(filters)
+                where: UniformQueryFilter(filters)
             });
         }
         catch (err) {
@@ -31,7 +31,7 @@ class ContractRepository extends IContractRepository {
 
     async getById(id) {
         try {
-            const entity = await ContractModel.findByPk(id, { include: relations })
+            const entity = await UniformModel.findByPk(id, { include: relations })
             if (!entity) {
                 throw new Error('Entity not found')
             }
@@ -44,7 +44,7 @@ class ContractRepository extends IContractRepository {
 
     async create(data) {
         try {
-            return await ContractModel.create(data)
+            return await UniformModel.create(data)
         }
         catch (err) {
             throw new Error(err.message)
@@ -53,7 +53,7 @@ class ContractRepository extends IContractRepository {
 
     async update(id, data) {
         try {
-            return await ContractModel.update(data, {
+            return await UniformModel.update(data, {
                 where: {
                     id: id
                 }
@@ -66,7 +66,7 @@ class ContractRepository extends IContractRepository {
 
     async delete(id) {
         try {
-            return await ContractModel.destroy(
+            return await UniformModel.destroy(
                 {
                     where: {
                         id: id
@@ -77,14 +77,6 @@ class ContractRepository extends IContractRepository {
             throw new Error(err.message)
         }
     }
-
-    async saveFiles(id, files) {
-        const path = 'uploads/contracts/'
-        if (files.evidence) {
-            let file = files.evidence
-            file.mv(path + id + '/evidence.pdf')
-        }
-    }
 }
 
-module.exports = ContractRepository;
+module.exports = UniformRepository;

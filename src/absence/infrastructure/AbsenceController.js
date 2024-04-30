@@ -1,12 +1,15 @@
 const { SendSuccessData, SendErrorData } = require('../../../helpers/ApiResponse');
 const AbsenceService = require('../application/AbsenceService');
 const AbsenceRepository = require('./AbsenceRepository');
+const EmployeeRepository = require('../../employee/infrastructure/EmployeeRepository');
 
 const absenceRepository = new AbsenceRepository();
-const absenceService = new AbsenceService(absenceRepository);
+const employeeRepository = new EmployeeRepository();
+
+const absenceService = new AbsenceService(absenceRepository, employeeRepository);
 
 const getAll = async (request, response) => {
-    const data = await absenceService.getAllAbsences()
+    const data = await absenceService.getAllAbsences(request.query)
     if (data.length) {
         return SendSuccessData(response, 200, data, 'Ok')
     }
@@ -22,6 +25,14 @@ const getById = async (request, response) => {
     catch (err) {
         return SendErrorData(response, 404, null, err.message)
     }
+}
+
+const getByGroup = async (request, response) => {
+    const data = await absenceService.getByGroup(request.query)
+    if (data.length) {
+        return SendSuccessData(response, 200, data, 'Ok')
+    }
+    return SendErrorData(response, 404, [], 'No data found')
 }
 
 const create = async (request, response) => {
@@ -64,6 +75,7 @@ const deleteById = async (request, response) => {
 module.exports = {
     getAll,
     getById,
+    getByGroup,
     create,
     updateById,
     deleteById

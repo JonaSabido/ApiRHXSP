@@ -2,13 +2,20 @@ const Absence = require("../domain/Absence");
 
 class AbsenceService {
     constructor(
-        iAbsenceRepository
+        iAbsenceRepository,
+        iEmployeeRepository
+
     ) {
         this.iAbsenceRepository = iAbsenceRepository
+        this.iEmployeeRepository = iEmployeeRepository
     }
 
-    async getAllAbsences() {
-        return await this.iAbsenceRepository.getAll();
+    async getAllAbsences(filters) {
+        return await this.iAbsenceRepository.getAll(filters);
+    }
+
+    async getByGroup(filters) {
+        return await this.iAbsenceRepository.getByGroup(filters);
     }
 
     async getAbsenceById(id) {
@@ -20,7 +27,6 @@ class AbsenceService {
             entity.id_job,
             entity.date,
             entity.descriptiom,
-            entity.path,
             entity.createdAt,
             entity.updatedAt,
             entity.type_absence,
@@ -30,6 +36,8 @@ class AbsenceService {
     }
 
     async createAbsence(data) {
+        const employee = await this.iEmployeeRepository.getById(data.id_employee);
+        data.id_job = employee.id_job
         const newEntity = await this.iAbsenceRepository.create(data)
         return new Absence(
             newEntity.id,
@@ -38,7 +46,6 @@ class AbsenceService {
             newEntity.id_job,
             newEntity.date,
             newEntity.descriptiom,
-            newEntity.path,
             newEntity.createdAt,
             newEntity.updatedAt,
         );

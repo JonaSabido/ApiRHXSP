@@ -1,20 +1,18 @@
 const { SendSuccessData, SendErrorData } = require('../../../helpers/ApiResponse');
-const ContractService = require('../application/ContractService');
-const ContractResponseDTO = require('../domain/ContractResponseDTO');
-const ContractRepository = require('./ContractRepository');
+const UniformService = require('../application/UniformService');
+const UniformRepository = require('./UniformRepository');
+const EmployeeRepository = require('../../employee/infrastructure/EmployeeRepository');
 
-const contractRepository = new ContractRepository();
-const contractService = new ContractService(contractRepository);
+
+const uniformRepository = new UniformRepository();
+const employeeRepository = new EmployeeRepository();
+
+const uniformService = new UniformService(uniformRepository, employeeRepository);
 
 const getAll = async (request, response) => {
-    const data = await contractService.getAllContracts(request.query)
+    const data = await uniformService.getAllEmployeeReentries(request.query)
     if (data.length) {
-        const list = []
-        data.forEach(element => {
-            const newDTO = new ContractResponseDTO(element)
-            list.push(newDTO)
-        });
-        return SendSuccessData(response, 200, list, 'Ok')
+        return SendSuccessData(response, 200, data, 'Ok')
     }
     return SendErrorData(response, 404, [], 'No data found')
 }
@@ -22,7 +20,7 @@ const getAll = async (request, response) => {
 const getById = async (request, response) => {
     try {
         const id = request.params.id
-        const entity = await contractService.getContractById(id)
+        const entity = await uniformService.getUniformById(id)
         return SendSuccessData(response, 200, entity, 'Ok')
     }
     catch (err) {
@@ -32,13 +30,8 @@ const getById = async (request, response) => {
 
 const create = async (request, response) => {
     const data = request.body
-    const files = request.files
-
     try {
-        const newEntity = await contractService.createContract(data)
-        if (files) {
-            await contractService.saveFiles(newEntity.id, files)
-        }
+        const newEntity = await uniformService.createUniform(data)
         return SendSuccessData(response, 201, newEntity, 'Created')
     }
     catch (err) {
@@ -48,13 +41,9 @@ const create = async (request, response) => {
 
 const updateById = async (request, response) => {
     const data = request.body
-    const files = request.files
     const id = request.params.id
     try {
-        const updatedEntity = await contractService.updateContract(id, data)
-        if (files) {
-            await contractService.saveFiles(id, files)
-        }
+        const updatedEntity = await uniformService.updateUniform(id, data)
         return SendSuccessData(response, 200, updatedEntity, 'Updated')
     }
     catch (err) {
@@ -67,7 +56,7 @@ const updateById = async (request, response) => {
 const deleteById = async (request, response) => {
     const id = request.params.id
     try {
-        const deletedEntity = await contractService.deleteContract(id)
+        const deletedEntity = await uniformService.deleteUniform(id)
         return SendSuccessData(response, 200, deletedEntity, 'Deleted')
     }
     catch (err) {

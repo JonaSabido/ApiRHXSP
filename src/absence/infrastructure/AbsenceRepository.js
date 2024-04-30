@@ -4,36 +4,37 @@ const { EmployeeModel } = require('../../employee/infrastructure/EmployeeModel')
 const { JobModel } = require('../../job/infrastructure/JobModel');
 const { TypeAbsenceModel } = require('../../type-absence/infrastructure/TypeAbsenceModel');
 const { AbsenceQueryFilter } = require('../../../helpers/QueryFilters');
+const { connection } = require('../../../config.db');
 
 
-const relations = [
-    {
-        model: TypeAbsenceModel,
-        attributes: ['id', 'name'],
-        as: 'type_absence'
-    },
-    {
-        model: EmployeeModel,
-        attributes: ['id', 'name', 'sure_name', 'last_name'],
-        as: 'employee'
-    },
-    {
-        model: JobModel,
-        attributes: ['id', 'id_area', 'name',],
-        as: 'job'
-    }
-]
+const relationTypeAbsence = {
+    model: TypeAbsenceModel,
+    attributes: ['id', 'name'],
+    as: 'type_absence'
+}
+
+const relationJob = {
+    model: JobModel,
+    attributes: ['id', 'id_area', 'name',],
+    as: 'job'
+}
+
+const relationEmployee = {
+    model: EmployeeModel,
+    attributes: ['id', 'name', 'sure_name', 'last_name'],
+    as: 'employee'
+}
 
 class AbsenceRepository extends IAbsenceRepository {
     constructor() {
         super()
     }
 
-    async getAll() {
+    async getAll(filters) {
         try {
             return await AbsenceModel.findAll({
-                where: AbsenceQueryFilter(filters),
-                include: relations
+                include: [relationEmployee, relationTypeAbsence, relationJob],
+                where: AbsenceQueryFilter(filters)
             });
         }
         catch (err) {
@@ -43,11 +44,28 @@ class AbsenceRepository extends IAbsenceRepository {
 
     async getById(id) {
         try {
-            const entity = await AbsenceModel.findByPk(id, { include: relations })
+            const entity = await AbsenceModel.findByPk(id, { include: [relationEmployee, relationTypeAbsence, relationJob] })
             if (!entity) {
                 throw new Error('Entity not found')
             }
             return entity
+        }
+        catch (err) {
+            throw new Error(err.message)
+        }
+    }
+
+    async getByGroup(filters) {
+        try {
+            return await AbsenceModel.findAll({
+                attributes: [
+                    [connection.fn('COUNT', connection.col('absence.id')), 'total'],
+                    [connection.literal('GROUP_CONCAT(absence.date)'), 'dates']
+                ],
+                group: 'absence.id_employee',
+                include: [relationEmployee],
+                where: AbsenceQueryFilter(filters)
+            });
         }
         catch (err) {
             throw new Error(err.message)

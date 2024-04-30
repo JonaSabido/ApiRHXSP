@@ -291,6 +291,21 @@ ALTER TABLE employees ADD COLUMN comments varchar(500) NULL AFTER cp;
 
 ALTER TABLE employees ADD COLUMN id_recruitment_method INT NULL AFTER id_job;
 ALTER TABLE employees ADD FOREIGN KEY (id_recruitment_method) REFERENCES recruitment_methods(id);
+
+
+CREATE TABLE uniforms (
+    id INT AUTO_INCREMENT NOT NULL,
+    id_employee INT NOT NULL,
+    type int NOT NULL,
+    delivered_date date NOT NULL,
+    comments varchar(255) NULL,
+    createdAt TIMESTAMP NULL DEFAULT NULL,
+    updatedAt TIMESTAMP NULL DEFAULT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY(id_employee) REFERENCES employees(id)
+);
+
+ALTER TABLE absences DROP COLUMN path;
  
 
 

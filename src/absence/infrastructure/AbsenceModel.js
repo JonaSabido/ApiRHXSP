@@ -25,10 +25,6 @@ const AbsenceModel = connection.define('absence', {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    path: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    }
 })
 AbsenceModel.belongsTo(TypeAbsenceModel , { as: 'type_absence', foreignKey: 'id_type_absence' })
 AbsenceModel.belongsTo(EmployeeModel , { as: 'employee', foreignKey: 'id_employee' })

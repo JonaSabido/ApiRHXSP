@@ -24,7 +24,7 @@ const antidopingRoute = require('./src/antidoping/infrastructure/AntidopingRoute
 const trainingRoute = require('./src/training/infrastructure/TrainingRoute.js')
 const extraTimeRoute = require('./src/extra-time/infrastructure/ExtraTimeRoute.js')
 const recruitmentMethodRoute = require('./src/recruitment-method/infrastructure/RecruitmentMethodRoute.js')
-
+const uniformRoute = require('./src/uniform/infrastructure/UniformRoute.js')
 
 
 
@@ -45,7 +45,7 @@ app.use('/api',
     emergencieRoute, contractRoute, diseaseRoute, employeeDiseasetRoute,
     typeAbsenceRoute, absenceRoute, employeeReentryRoute, employeeLeavesRoute,
     vacationTimesRoute, employeeVacationRoute, recommendationRoute, recommendationPaymentRoute,
-    userRoute, antidopingRoute, trainingRoute, extraTimeRoute, recruitmentMethodRoute
+    userRoute, antidopingRoute, trainingRoute, extraTimeRoute, recruitmentMethodRoute, uniformRoute
 )
 
 app.use('/uploads', express.static('uploads'));

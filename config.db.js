@@ -11,6 +11,7 @@ connection.authenticate()
         console.log('🐌 Conexión establecida a la base de datos')
     })
     .catch(error => {
+        console.log(error)
         console.log('❌ No se pudo establecer conexión con la base de datos')
     })
 

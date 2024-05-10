@@ -1,14 +1,20 @@
 const { SendSuccessData, SendErrorData } = require('../../../helpers/ApiResponse');
 const VacationTimeService = require('../application/VacationTimeService');
+const VacationTimeResponseDTO = require('../domain/VacationTimeResponseDTO');
 const VacationTimeRepository = require('./VacationTimeRepository');
 
 const vacationTimeRepository = new VacationTimeRepository();
 const vacationTimeService = new VacationTimeService(vacationTimeRepository);
 
 const getAll = async (request, response) => {
-    const data = await vacationTimeService.getAllVacationTimes()
+    const data = await vacationTimeService.getAllVacationTimes(request.query)
     if (data.length) {
-        return SendSuccessData(response, 200, data, 'Ok')
+        const list = []
+        data.forEach(element => {
+            const newDTO = new VacationTimeResponseDTO(element)
+            list.push(newDTO)
+        });
+        return SendSuccessData(response, 200, list, 'Ok')
     }
     return SendErrorData(response, 404, [], 'No data found')
 }
@@ -24,16 +30,16 @@ const getById = async (request, response) => {
     }
 }
 
-const create = async (request, response) => {
-    const data = request.body
-    try {
-        const newEntity = await vacationTimeService.createVacationTime(data)
-        return SendSuccessData(response, 201, newEntity, 'Created')
-    }
-    catch (err) {
-        return SendErrorData(response, 500, null, err.message)
-    }
-}
+// const create = async (request, response) => {
+//     const data = request.body
+//     try {
+//         const newEntity = await vacationTimeService.createVacationTime(data)
+//         return SendSuccessData(response, 201, newEntity, 'Created')
+//     }
+//     catch (err) {
+//         return SendErrorData(response, 500, null, err.message)
+//     }
+// }
 
 const updateById = async (request, response) => {
     const data = request.body
@@ -49,22 +55,22 @@ const updateById = async (request, response) => {
 }
 
 
-const deleteById = async (request, response) => {
-    const id = request.params.id
-    try {
-        const deletedEntity = await vacationTimeService.deleteVacationTime(id)
-        return SendSuccessData(response, 200, deletedEntity, 'Deleted')
-    }
-    catch (err) {
-        return SendErrorData(response, 500, null, err.message)
-    }
-}
+// const deleteById = async (request, response) => {
+//     const id = request.params.id
+//     try {
+//         const deletedEntity = await vacationTimeService.deleteVacationTime(id)
+//         return SendSuccessData(response, 200, deletedEntity, 'Deleted')
+//     }
+//     catch (err) {
+//         return SendErrorData(response, 500, null, err.message)
+//     }
+// }
 
 
 module.exports = {
     getAll,
     getById,
-    create,
+    // create,
     updateById,
-    deleteById
+    // deleteById
 };

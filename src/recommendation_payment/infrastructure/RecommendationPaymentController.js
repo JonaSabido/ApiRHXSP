@@ -1,5 +1,6 @@
 const { SendSuccessData, SendErrorData } = require('../../../helpers/ApiResponse');
 const RecommendationPaymentService = require('../application/RecommendationPaymentService');
+const RecommendationPaymentResponseDTO = require('../domain/RecommendationPaymentResponseDTO');
 const RecommendationPaymentRepository = require('./RecommendationPaymentRepository');
 
 const recommendationPaymentRepository = new RecommendationPaymentRepository();
@@ -8,7 +9,12 @@ const recommendationPaymentService = new RecommendationPaymentService(recommenda
 const getAll = async (request, response) => {
     const data = await recommendationPaymentService.getAllRecommendationPayments()
     if (data.length) {
-        return SendSuccessData(response, 200, data, 'Ok')
+        const list = []
+        data.forEach(element => {
+            const newDTO = new RecommendationPaymentResponseDTO(element)
+            list.push(newDTO)
+        });
+        return SendSuccessData(response, 200, list, 'Ok')
     }
     return SendErrorData(response, 404, [], 'No data found')
 }

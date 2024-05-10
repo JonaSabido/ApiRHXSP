@@ -1,9 +1,13 @@
 class IEmployeeVacationRepository {
-    async getAll() {
+    async getAll(filters) {
       throw new Error('Method not implemented');
     }
   
     async getById(id) {
+      throw new Error('Method not implemented');
+    }
+
+    async getDatesByVacationTime(idVacationTime){
       throw new Error('Method not implemented');
     }
   

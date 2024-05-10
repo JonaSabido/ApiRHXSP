@@ -2,6 +2,7 @@ const { SendSuccessData, SendErrorData } = require('../../../helpers/ApiResponse
 const AbsenceService = require('../application/AbsenceService');
 const AbsenceRepository = require('./AbsenceRepository');
 const EmployeeRepository = require('../../employee/infrastructure/EmployeeRepository');
+const AbsenceResponseDTO = require('../domain/AbsenceResponseDTO');
 
 const absenceRepository = new AbsenceRepository();
 const employeeRepository = new EmployeeRepository();
@@ -11,7 +12,12 @@ const absenceService = new AbsenceService(absenceRepository, employeeRepository)
 const getAll = async (request, response) => {
     const data = await absenceService.getAllAbsences(request.query)
     if (data.length) {
-        return SendSuccessData(response, 200, data, 'Ok')
+        const list = []
+        data.forEach(element => {
+            const newDTO = new AbsenceResponseDTO(element)
+            list.push(newDTO)
+        });
+        return SendSuccessData(response, 200, list, 'Ok')
     }
     return SendErrorData(response, 404, [], 'No data found')
 }

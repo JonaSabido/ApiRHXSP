@@ -20,7 +20,7 @@ const EmployeeVacationModel = connection.define('employee_vacation', {
         allowNull: false
     }
 })
-EmployeeVacationModel.belongsTo(VacationTimeModel , { as: 'vacationtime', foreignKey: 'id_vacation_time' })
+EmployeeVacationModel.belongsTo(VacationTimeModel , { as: 'vacation_time', foreignKey: 'id_vacation_time' })
 
 
 

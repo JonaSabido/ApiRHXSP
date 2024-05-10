@@ -2,6 +2,7 @@ const { SendSuccessData, SendErrorData } = require('../../../helpers/ApiResponse
 const EmployeeReentryService = require('../application/EmployeeReentryService');
 const EmployeeReentryRepository = require('./EmployeeReentryRepository');
 const EmployeeRepository = require('../../employee/infrastructure/EmployeeRepository');
+const EmployeeReentryResponseDTO = require('../domain/EmployeeReentryResponseDTO');
 
 
 const employeeReentryRepository = new EmployeeReentryRepository();
@@ -12,7 +13,12 @@ const employeeReentryService = new EmployeeReentryService(employeeReentryReposit
 const getAll = async (request, response) => {
     const data = await employeeReentryService.getAllEmployeeReentries(request.query)
     if (data.length) {
-        return SendSuccessData(response, 200, data, 'Ok')
+        const list = []
+        data.forEach(element => {
+            const newDTO = new EmployeeReentryResponseDTO(element)
+            list.push(newDTO)
+        });
+        return SendSuccessData(response, 200, list, 'Ok')
     }
     return SendErrorData(response, 404, [], 'No data found')
 }

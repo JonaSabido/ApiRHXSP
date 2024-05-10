@@ -7,8 +7,8 @@ class VacationTimeService {
         this.iVacationTimeRepository = iVacationTimeRepository
     }
 
-    async getAllVacationTimes() {
-        return await this.iVacationTimeRepository.getAll();
+    async getAllVacationTimes(filters) {
+        return await this.iVacationTimeRepository.getAll(filters);
     }
 
     async getVacationTimeById(id) {
@@ -17,7 +17,7 @@ class VacationTimeService {
             entity.id,
             entity.id_employee,
             entity.start_date,
-            entity.end_year,
+            entity.end_date,
             entity.days,
             entity.available_days,
             entity.createdAt,
@@ -26,19 +26,19 @@ class VacationTimeService {
         );
     }
 
-    async createVacationTime(data) {
-        const newEntity = await this.iVacationTimeRepository.create(data)
-        return new VacationTime(
-            newEntity.id,
-            newEntity.id_employee,
-            entity.start_date,
-            entity.end_year,
-            entity.days,
-            entity.available_days,
-            newEntity.createdAt,
-            newEntity.updatedAt,
-        );
-    }
+    // async createVacationTime(data) {
+    //     const newEntity = await this.iVacationTimeRepository.create(data)
+    //     return new VacationTime(
+    //         newEntity.id,
+    //         newEntity.id_employee,
+    //         entity.start_date,
+    //         entity.end_date,
+    //         entity.days,
+    //         entity.available_days,
+    //         newEntity.createdAt,
+    //         newEntity.updatedAt,
+    //     );
+    // }
 
     async updateVacationTime(id, data) {
         await this.iVacationTimeRepository.getById(id);
@@ -46,10 +46,10 @@ class VacationTimeService {
         return await this.iVacationTimeRepository.getById(id);
     }
 
-    async deleteVacationTime(id) {
-        await this.iVacationTimeRepository.getById(id);
-        return await this.iVacationTimeRepository.delete(id)
-    }
+    // async deleteVacationTime(id) {
+    //     await this.iVacationTimeRepository.getById(id);
+    //     return await this.iVacationTimeRepository.delete(id)
+    // }
 
 }
 

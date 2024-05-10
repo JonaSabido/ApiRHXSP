@@ -1,3 +1,4 @@
+const { dateFormatted } = require("../../../helpers/DateService");
 const EmployeeFileNameResponseDTO = require("./EmployeeFileNameResponseDTO");
 
 class EmployeeResponseDTO {
@@ -14,6 +15,7 @@ class EmployeeResponseDTO {
         this.sure_name = employee.sure_name;
         this.last_name = employee.last_name;
         this.entry_date = employee.entry_date;
+        this.entry_date_formatted = dateFormatted(employee.entry_date);
         this.entry_month = this.getMonth(parseInt(employee.entry_date?.slice(5, 7)))
         this.entry_year = employee.entry_date?.slice(0, 4)
         this.gender = employee.gender;

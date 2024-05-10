@@ -11,7 +11,7 @@ const VacationTimeModel = connection.define('vacation_time', {
         type: DataTypes.DATE,
         allowNull: false
     },
-    end_year: {
+    end_date: {
         type: DataTypes.DATE,
         allowNull: false
     },

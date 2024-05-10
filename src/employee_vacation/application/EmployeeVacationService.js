@@ -1,14 +1,17 @@
+const { getDifferenceDaysBetweenDates } = require("../../../helpers/DateService");
 const EmployeeVacation = require("../domain/EmployeeVacation");
 
 class EmployeeVacationService {
     constructor(
-        iEmployeeVacationRepository
+        iEmployeeVacationRepository,
+        iVacationTimeRepository,
     ) {
         this.iEmployeeVacationRepository = iEmployeeVacationRepository
+        this.iVacationTimeRepository = iVacationTimeRepository
     }
 
-    async getAllEmployeeVacations() {
-        return await this.iEmployeeVacationRepository.getAll();
+    async getAllEmployeeVacations(filters) {
+        return await this.iEmployeeVacationRepository.getAll(filters);
     }
 
     async getEmployeeVacationById(id) {
@@ -26,13 +29,17 @@ class EmployeeVacationService {
     }
 
     async createEmployeeVacation(data) {
+        const vacationTime = await this.iVacationTimeRepository.getById(data.id_vacation_time)
+        const newAvailableDays = vacationTime.available_days - getDifferenceDaysBetweenDates(data.start_date, data.end_date)
+        data.available_days = newAvailableDays
         const newEntity = await this.iEmployeeVacationRepository.create(data)
+        await this.iVacationTimeRepository.update(vacationTime.id, { available_days: newAvailableDays })
         return new EmployeeVacation(
             newEntity.id,
             newEntity.id_vacation_time,
-            entity.start_date,
-            entity.end_year,
-            entity.available_days,
+            newEntity.start_date,
+            newEntity.end_date,
+            newEntity.available_days,
             newEntity.createdAt,
             newEntity.updatedAt,
         );
@@ -45,7 +52,10 @@ class EmployeeVacationService {
     }
 
     async deleteEmployeeVacation(id) {
-        await this.iEmployeeVacationRepository.getById(id);
+        const entityToDelete = await this.iEmployeeVacationRepository.getById(id);
+        const vacationTime = await this.iVacationTimeRepository.getById(entityToDelete.id_vacation_time)
+        const newAvailableDays = vacationTime.available_days + getDifferenceDaysBetweenDates(entityToDelete.start_date.split('T')[0], entityToDelete.end_date.split('T')[0])
+        await this.iVacationTimeRepository.update(vacationTime.id, { available_days: newAvailableDays })
         return await this.iEmployeeVacationRepository.delete(id)
     }
 

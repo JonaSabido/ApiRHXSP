@@ -128,29 +128,29 @@ const ContractQueryFilter = (filters) => {
 
     if (filters.start_year) {
         queryFilters.start_date = {
-            [Op.gte]: new Date(`${filters.start_year}-01-01`).setUTCHours(0),
-            [Op.lte]: new Date(`${filters.start_year}-12-31`).setUTCHours(0),
+            [Op.gte]: new Date(`${filters.start_year}-01-01`).toISOString().slice(0, 10),
+            [Op.lte]: new Date(`${filters.start_year}-12-31`).toISOString().slice(0, 10),
         }
     }
 
     if (filters.end_year) {
         queryFilters.end_date = {
-            [Op.gte]: new Date(`${filters.end_year}-01-01`).setUTCHours(0),
-            [Op.lte]: new Date(`${filters.end_year}-12-31`).setUTCHours(0),
+            [Op.gte]: new Date(`${filters.end_year}-01-01`).toISOString().slice(0, 10),
+            [Op.lte]: new Date(`${filters.end_year}-12-31`).toISOString().slice(0, 10),
         }
     }
 
     if (filters.start_start_date || filters.start_end_date) {
         queryFilters.start_date = {
-            [Op.gte]: new Date(filters.start_start_date ?? '0001-01-01').setUTCHours(0),
-            [Op.lte]: new Date(filters.start_end_date ?? '9999-12-31').setUTCHours(0),
+            [Op.gte]: new Date(filters.start_start_date ?? '0001-01-01').toISOString().slice(0, 10),
+            [Op.lte]: new Date(filters.start_end_date ?? '9999-12-31').toISOString().slice(0, 10)
         }
     }
 
     if (filters.end_start_date || filters.end_end_date) {
         queryFilters.end_date = {
-            [Op.gte]: new Date(filters.end_start_date ?? '0001-01-01').setUTCHours(0),
-            [Op.lte]: new Date(filters.end_end_date ?? '9999-12-31').setUTCHours(0),
+            [Op.gte]: new Date(filters.end_start_date ?? '0001-01-01').toISOString().slice(0, 10),
+            [Op.lte]: new Date(filters.end_end_date ?? '9999-12-31').toISOString().slice(0, 10),
         }
     }
 
@@ -264,6 +264,28 @@ const UniformQueryFilter = (filters) => {
     return queryFilters;
 }
 
+const VacationTimeQueryFilter = (filters) => {
+    const queryFilters = {}
+    if (filters.id_employee) {
+        queryFilters.id_employee = filters.id_employee
+    }
+
+    return queryFilters;
+}
+
+const EmployeeVacationQueryFilter = (filters) => {
+    const queryFilters = {}
+    if (filters.id_employee) {
+        queryFilters.id_employee = filters.id_employee
+    }
+
+    if (filters.id_vacation_time) {
+        queryFilters.id_vacation_time = filters.id_vacation_time
+    }
+
+    return queryFilters;
+}
+
 module.exports = {
     AreaQueryFilter,
     JobQueryFilter,
@@ -280,5 +302,7 @@ module.exports = {
     ExtraTimeQueryFilter,
     RecruitmentMethodQueryFilter,
     AbsenceQueryFilter,
-    UniformQueryFilter
+    UniformQueryFilter,
+    VacationTimeQueryFilter,
+    EmployeeVacationQueryFilter
 }

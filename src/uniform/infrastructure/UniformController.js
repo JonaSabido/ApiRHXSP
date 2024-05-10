@@ -2,6 +2,7 @@ const { SendSuccessData, SendErrorData } = require('../../../helpers/ApiResponse
 const UniformService = require('../application/UniformService');
 const UniformRepository = require('./UniformRepository');
 const EmployeeRepository = require('../../employee/infrastructure/EmployeeRepository');
+const UniformResponseDTO = require('../domain/UniformResponseDTO');
 
 
 const uniformRepository = new UniformRepository();
@@ -12,7 +13,12 @@ const uniformService = new UniformService(uniformRepository, employeeRepository)
 const getAll = async (request, response) => {
     const data = await uniformService.getAllEmployeeReentries(request.query)
     if (data.length) {
-        return SendSuccessData(response, 200, data, 'Ok')
+        const list = []
+        data.forEach(element => {
+            const newDTO = new UniformResponseDTO(element)
+            list.push(newDTO)
+        });
+        return SendSuccessData(response, 200, list, 'Ok')
     }
     return SendErrorData(response, 404, [], 'No data found')
 }

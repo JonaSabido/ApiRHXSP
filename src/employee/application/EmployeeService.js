@@ -2,9 +2,11 @@ const Employee = require("../domain/Employee");
 
 class EmployeeService {
     constructor(
-        iEmployeeRepository
+        iEmployeeRepository,
+        iVacationTimeRepository,
     ) {
         this.iEmployeeRepository = iEmployeeRepository
+        this.iVacationTimeRepository = iVacationTimeRepository
     }
 
     async getAllEmployees() {
@@ -49,6 +51,7 @@ class EmployeeService {
 
     async createEmployee(data) {
         const newEntity = await this.iEmployeeRepository.create(data)
+        await this.iVacationTimeRepository.createInitialVacationTimes(newEntity)
         return new Employee(
             newEntity.id,
             newEntity.id_department,

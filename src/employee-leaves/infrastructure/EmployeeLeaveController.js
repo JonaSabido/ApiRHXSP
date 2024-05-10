@@ -2,6 +2,7 @@ const { SendSuccessData, SendErrorData } = require('../../../helpers/ApiResponse
 const EmployeeLeaveService = require('../application/EmployeeLeaveService');
 const EmployeeLeaveRepository = require('./EmployeeLeaveRepository');
 const EmployeeRepository = require('../../employee/infrastructure/EmployeeRepository');
+const EmployeeLeaveResponseDTO = require('../domain/EmployeeLeaveResponseDTO');
 
 const employeeLeaveRepository = new EmployeeLeaveRepository();
 const employeeRepository = new EmployeeRepository();
@@ -11,7 +12,12 @@ const employeeLeaveService = new EmployeeLeaveService(employeeLeaveRepository, e
 const getAll = async (request, response) => {
     const data = await employeeLeaveService.getAllEmployeeLeaves(request.query)
     if (data.length) {
-        return SendSuccessData(response, 200, data, 'Ok')
+        const list = []
+        data.forEach(element => {
+            const newDTO = new EmployeeLeaveResponseDTO(element)
+            list.push(newDTO)
+        });
+        return SendSuccessData(response, 200, list, 'Ok')
     }
     return SendErrorData(response, 404, [], 'No data found')
 }

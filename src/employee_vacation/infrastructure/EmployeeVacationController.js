@@ -1,14 +1,23 @@
 const { SendSuccessData, SendErrorData } = require('../../../helpers/ApiResponse');
+const VacationTimeRepository = require('../../vacationtime/infrastructure/VacationTimeRepository');
 const EmployeeVacationService = require('../application/EmployeeVacationService');
+const EmployeeVacationResponseDTO = require('../domain/EmployeeVacationResponseDTO');
 const EmployeeVacationRepository = require('./EmployeeVacationRepository');
 
 const employeeVacationRepository = new EmployeeVacationRepository();
-const employeeVacationService = new EmployeeVacationService(employeeVacationRepository);
+const vacationTimeRepository = new VacationTimeRepository();
+
+const employeeVacationService = new EmployeeVacationService(employeeVacationRepository, vacationTimeRepository);
 
 const getAll = async (request, response) => {
-    const data = await employeeVacationService.getAllEmployeeVacations()
+    const data = await employeeVacationService.getAllEmployeeVacations(request.query)
     if (data.length) {
-        return SendSuccessData(response, 200, data, 'Ok')
+        const list = []
+        data.forEach(element => {
+            const newDTO = new EmployeeVacationResponseDTO(element)
+            list.push(newDTO)
+        });
+        return SendSuccessData(response, 200, list, 'Ok')
     }
     return SendErrorData(response, 404, [], 'No data found')
 }

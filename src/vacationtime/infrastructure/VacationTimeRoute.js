@@ -6,8 +6,8 @@ const uri = '/vacationtimes'
 
 api.get(uri, getAll)
 api.get(`${uri}/:id`, getById)
-api.post(uri, create)
+// api.post(uri, create)
 api.put(`${uri}/:id`, updateById)
-api.delete(`${uri}/:id`, deleteById)
+// api.delete(`${uri}/:id`, deleteById)
 
 module.exports = api

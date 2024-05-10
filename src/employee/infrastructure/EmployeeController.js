@@ -1,10 +1,13 @@
 const { SendSuccessData, SendErrorData } = require('../../../helpers/ApiResponse');
+const VacationTimeRepository = require('../../vacationtime/infrastructure/VacationTimeRepository');
 const EmployeeService = require('../application/EmployeeService');
 const EmployeeResponseDTO = require('../domain/EmployeeResponseDTO');
 const EmployeeRepository = require('./EmployeeRepository');
 
 const employeeRepository = new EmployeeRepository();
-const employeeService = new EmployeeService(employeeRepository);
+const vacationTimeRepository = new VacationTimeRepository()
+
+const employeeService = new EmployeeService(employeeRepository, vacationTimeRepository);
 
 const getAll = async (request, response) => {
     const data = await employeeService.getAllEmployees()

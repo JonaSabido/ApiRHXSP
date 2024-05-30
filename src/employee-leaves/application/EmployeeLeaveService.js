@@ -19,11 +19,13 @@ class EmployeeLeaveService {
         return new EmployeeLeave(
             entity.id,
             entity.id_employee,
+            entity.id_type_leave,
             entity.leave_date,
             entity.description,
             entity.createdAt,
             entity.updatedAt,
             entity.employee,
+            entity.type_leave
         );
     }
 
@@ -33,6 +35,7 @@ class EmployeeLeaveService {
         return new EmployeeLeave(
             newEntity.id,
             newEntity.id_employee,
+            newEntity.id_type_leave,
             newEntity.leave_date,
             newEntity.description,
             newEntity.createdAt,

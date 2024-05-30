@@ -1,13 +1,9 @@
-class IEmployeeVacationRepository {
+class ITypeLeaveRepository {
   async getAll(filters) {
     throw new Error('Method not implemented');
   }
 
   async getById(id) {
-    throw new Error('Method not implemented');
-  }
-
-  async getDatesByVacationTime(idVacationTime) {
     throw new Error('Method not implemented');
   }
 
@@ -22,11 +18,6 @@ class IEmployeeVacationRepository {
   async delete(id) {
     throw new Error('Method not implemented');
   }
-
-  async getDaysByVacationTimeId(id) {
-    throw new Error('Method not implemented');
-  }
-  
 }
 
-module.exports = IEmployeeVacationRepository;
+module.exports = ITypeLeaveRepository;

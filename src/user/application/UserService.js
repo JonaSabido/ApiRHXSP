@@ -7,8 +7,8 @@ class UserService {
         this.iUserRepository = iUserRepository
     }
 
-    async getAllUsers() {
-        return await this.iUserRepository.getAll();
+    async getAllUsers(filters) {
+        return await this.iUserRepository.getAll(filters);
     }
 
     async getUserById(id) {

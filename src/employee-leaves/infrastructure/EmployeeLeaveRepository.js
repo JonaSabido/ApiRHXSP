@@ -2,6 +2,7 @@ const IEmployeeLeaveRepository = require('../domain/IEmployeeLeaveRepository');
 const { EmployeeLeaveModel } = require('./EmployeeLeaveModel')
 const { EmployeeModel } = require('../../employee/infrastructure/EmployeeModel');
 const { EmployeeLeaveQueryFilter } = require('../../../helpers/QueryFilters');
+const { TypeLeaveModel } = require('../../type-leave/infrastructure/TypeLeaveModel');
 
 
 const relations = [
@@ -9,6 +10,11 @@ const relations = [
         model: EmployeeModel,
         attributes: ['id', 'name', 'sure_name', 'last_name'],
         as: 'employee'
+    },
+    {
+        model: TypeLeaveModel,
+        attributes: ['id', 'name',],
+        as: 'type_leave'
     },
 ]
 

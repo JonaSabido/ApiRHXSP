@@ -1,12 +1,12 @@
 const { SendSuccessData, SendErrorData } = require('../../../helpers/ApiResponse');
-const UserService = require('../application/UserService');
-const UserRepository = require('./UserRepository');
+const TypeLeaveService = require('../application/TypeLeaveService');
+const TypeLeaveRepository = require('./TypeLeaveRepository');
 
-const userRepository = new UserRepository();
-const userService = new UserService(userRepository);
+const typeAbsenceRepository = new TypeLeaveRepository();
+const typeAbsenceService = new TypeLeaveService(typeAbsenceRepository);
 
 const getAll = async (request, response) => {
-    const data = await userService.getAllUsers(request.query)
+    const data = await typeAbsenceService.getAllTypeLeaves(request.query)
     if (data.length) {
         return SendSuccessData(response, 200, data, 'Ok')
     }
@@ -16,7 +16,7 @@ const getAll = async (request, response) => {
 const getById = async (request, response) => {
     try {
         const id = request.params.id
-        const entity = await userService.getUserById(id)
+        const entity = await typeAbsenceService.getTypeLeaveById(id)
         return SendSuccessData(response, 200, entity, 'Ok')
     }
     catch (err) {
@@ -27,7 +27,7 @@ const getById = async (request, response) => {
 const create = async (request, response) => {
     const data = request.body
     try {
-        const newEntity = await userService.createUser(data)
+        const newEntity = await typeAbsenceService.createTypeLeave(data)
         return SendSuccessData(response, 201, newEntity, 'Created')
     }
     catch (err) {
@@ -39,7 +39,7 @@ const updateById = async (request, response) => {
     const data = request.body
     const id = request.params.id
     try {
-        const updatedEntity = await userService.updateUser(id, data)
+        const updatedEntity = await typeAbsenceService.updateTypeLeave(id, data)
         return SendSuccessData(response, 200, updatedEntity, 'Updated')
     }
     catch (err) {
@@ -52,7 +52,7 @@ const updateById = async (request, response) => {
 const deleteById = async (request, response) => {
     const id = request.params.id
     try {
-        const deletedEntity = await userService.deleteUser(id)
+        const deletedEntity = await typeAbsenceService.deleteTypeLeave(id)
         return SendSuccessData(response, 200, deletedEntity, 'Deleted')
     }
     catch (err) {

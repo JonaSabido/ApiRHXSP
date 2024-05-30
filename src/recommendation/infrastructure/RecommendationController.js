@@ -11,7 +11,7 @@ const recommendationService = new RecommendationService(recommendationRepository
 
 
 const getAll = async (request, response) => {
-    const data = await recommendationService.getAllRecommendations()
+    const data = await recommendationService.getAllRecommendations(request.query)
     if (data.length) {
         return SendSuccessData(response, 200, data, 'Ok')
     }

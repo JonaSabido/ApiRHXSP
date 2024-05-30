@@ -306,6 +306,57 @@ CREATE TABLE uniforms (
 );
 
 ALTER TABLE absences DROP COLUMN path;
+
+CREATE TABLE notification_types (
+    id INT AUTO_INCREMENT NOT NULL,
+    name varchar(50) NOT NULL,
+    createdAt TIMESTAMP NULL DEFAULT NULL,
+    updatedAt TIMESTAMP NULL DEFAULT NULL,
+    PRIMARY KEY (id)
+);
+
+
+INSERT INTO `notification_types` (`id`, `name`, `createdAt`, `updatedAt`) VALUES
+(1, 'Cumpleaños', NULL, NULL),
+(2, 'Pago Recomendación', NULL, NULL),
+(3, 'Finalización Contrato', NULL, NULL);
+
+CREATE TABLE notifications (
+    id INT AUTO_INCREMENT NOT NULL,
+    id_notification_type INT NOT NULL,
+    title varchar(100) NOT NULL,
+    description varchar(255) NOT NULL,
+    date DATE NOT NULL,
+    createdAt TIMESTAMP NULL DEFAULT NULL,
+    updatedAt TIMESTAMP NULL DEFAULT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY(id_notification_type) REFERENCES notification_types(id)
+);
+
+CREATE TABLE notification_users(
+    id INT AUTO_INCREMENT NOT NULL,
+    id_notification INT NOT NULL,
+    id_user INT NOT NULL,
+    `status` BOOLEAN NOT NULL,
+    createdAt TIMESTAMP NULL DEFAULT NULL,
+    updatedAt TIMESTAMP NULL DEFAULT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY(id_notification) REFERENCES notifications(id),
+    FOREIGN KEY(id_user) REFERENCES users(id)
+);
  
+CREATE TABLE type_leaves(
+    id INT AUTO_INCREMENT NOT NULL,
+    name varchar(50) NOT NULL,
+    createdAt TIMESTAMP NULL DEFAULT NULL,
+    updatedAt TIMESTAMP NULL DEFAULT NULL,
+    PRIMARY KEY (id)
+);
+
+DELETE FROM employee_leaves;
+ALTER TABLE employee_leaves ADD COLUMN id_type_leave INT NOT NULL;
+ALTER TABLE employee_leaves ADD FOREIGN KEY (id_type_leave) REFERENCES type_leaves(id);
+
+
 
 

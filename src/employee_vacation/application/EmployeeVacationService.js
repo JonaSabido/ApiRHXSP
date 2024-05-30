@@ -14,6 +14,10 @@ class EmployeeVacationService {
         return await this.iEmployeeVacationRepository.getAll(filters);
     }
 
+    async getDaysByVacationTimeId(id) {
+        return await this.iEmployeeVacationRepository.getDaysByVacationTimeId(id);
+    }
+
     async getEmployeeVacationById(id) {
         const entity = await this.iEmployeeVacationRepository.getById(id);
         return new EmployeeVacation(

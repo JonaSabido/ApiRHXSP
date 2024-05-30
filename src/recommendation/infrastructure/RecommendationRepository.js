@@ -1,6 +1,7 @@
-const IRecommendationRepository = require('../domain/RecommendationRepository');
+const IRecommendationRepository = require('../domain/IRecommendationRepository');
 const { RecommendationModel } = require('./RecommendationModel')
 const { EmployeeModel } = require('../../employee/infrastructure/EmployeeModel');
+const { RecommendationQueryFilter } = require('../../../helpers/QueryFilters');
 
 
 const relations = [
@@ -11,7 +12,7 @@ const relations = [
     },
     {
         model: EmployeeModel,
-        attributes: ['id','name','sure_name','last_name'],
+        attributes: ['id', 'name', 'sure_name', 'last_name'],
         as: 'recommended_employee'
     }
 ]
@@ -21,9 +22,13 @@ class RecommendationRepository extends IRecommendationRepository {
         super()
     }
 
-    async getAll() {
+    async getAll(filters) {
         try {
-            return await RecommendationModel.findAll({ include: relations });
+            return await RecommendationModel.findAll({
+                where: RecommendationQueryFilter(filters),
+                include: relations,
+                order: [['id', 'DESC'],]
+            });
         }
         catch (err) {
             throw new Error(err.message)

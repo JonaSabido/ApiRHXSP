@@ -12,6 +12,7 @@ const emergencieRoute = require('./src/emergencie/infrastructure/EmergencieRoute
 const contractRoute = require('./src/contract/infrastructure/ContractRoute')
 const employeeDiseasetRoute = require('./src/employee-disease/infrastructure/EmployeeDiseaseRoute')
 const typeAbsenceRoute = require('./src/type-absence/infrastructure/TypeAbsenceRoute')
+const typeLeaveRoute = require('./src/type-leave/infrastructure/TypeLeaveRoute')
 const absenceRoute = require('./src/absence/infrastructure/AbsenceRoute')
 const diseaseRoute = require('./src/disease/infrastructure/DiseaseRoute')
 const employeeReentryRoute = require('./src/employee-reentry/infrastructure/EmployeeReentryRoute')
@@ -25,7 +26,8 @@ const trainingRoute = require('./src/training/infrastructure/TrainingRoute.js')
 const extraTimeRoute = require('./src/extra-time/infrastructure/ExtraTimeRoute.js')
 const recruitmentMethodRoute = require('./src/recruitment-method/infrastructure/RecruitmentMethodRoute.js')
 const uniformRoute = require('./src/uniform/infrastructure/UniformRoute.js')
-
+const notificationRoute = require('./src/notification/infrastructure/NotificationRoute.js')
+const analyticsRoute = require('./src/analytic/infrastructure/AnalyticRoute.js')
 
 
 const userRoute = require('./src/user/infrastructure/UserRoute.js')
@@ -42,10 +44,11 @@ app.use(fileUpload({
 
 app.use('/api',
     authRoute, areaRoute, jobRoute, departmentRoute, employeeRoute,
-    emergencieRoute, contractRoute, diseaseRoute, employeeDiseasetRoute,
+    emergencieRoute, contractRoute, diseaseRoute, employeeDiseasetRoute, typeLeaveRoute,
     typeAbsenceRoute, absenceRoute, employeeReentryRoute, employeeLeavesRoute,
     vacationTimesRoute, employeeVacationRoute, recommendationRoute, recommendationPaymentRoute,
-    userRoute, antidopingRoute, trainingRoute, extraTimeRoute, recruitmentMethodRoute, uniformRoute
+    userRoute, antidopingRoute, trainingRoute, extraTimeRoute, recruitmentMethodRoute, uniformRoute,
+    notificationRoute, analyticsRoute
 )
 
 app.use('/uploads', express.static('uploads'));

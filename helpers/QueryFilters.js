@@ -44,6 +44,15 @@ const TypeAbsenceQueryFilter = (filters) => {
     return queryFilters;
 }
 
+
+const TypeLeaveQueryFilter = (filters) => {
+    const queryFilters = {}
+    if (filters.name) {
+        queryFilters.name = { [Op.like]: `%${filters.name ?? ''}%` }
+    }
+    return queryFilters;
+}
+
 const EmployeeReentryQueryFilter = (filters) => {
     const queryFilters = {}
     if (filters.id_employee) {
@@ -275,12 +284,70 @@ const VacationTimeQueryFilter = (filters) => {
 
 const EmployeeVacationQueryFilter = (filters) => {
     const queryFilters = {}
+    // if (filters.id_employee) {
+    //     queryFilters.id_employee = filters.id_employee
+    // }
+
+    if (filters.id_vacation_time) {
+        queryFilters.id_vacation_time = filters.id_vacation_time
+    }
+
+    if (filters.start_year) {
+        queryFilters.start_date = {
+            [Op.gte]: new Date(`${filters.start_year}-01-01`).setUTCHours(0),
+            [Op.lte]: new Date(`${filters.start_year}-12-31`).setUTCHours(0),
+        }
+    }
+
+    if (filters.end_year) {
+        queryFilters.end_date = {
+            [Op.gte]: new Date(`${filters.end_year}-01-01`).setUTCHours(0),
+            [Op.lte]: new Date(`${filters.end_year}-12-31`).setUTCHours(0),
+        }
+    }
+
+    if (filters.start_start_date || filters.start_end_date) {
+        queryFilters.start_date = {
+            [Op.gte]: new Date(filters.start_start_date ?? '0001-01-01').setUTCHours(0),
+            [Op.lte]: new Date(filters.start_end_date ?? '9999-12-31').setUTCHours(0),
+        }
+    }
+
+    if (filters.end_start_date || filters.end_end_date) {
+        queryFilters.end_date = {
+            [Op.gte]: new Date(filters.end_start_date ?? '0001-01-01').setUTCHours(0),
+            [Op.lte]: new Date(filters.end_end_date ?? '9999-12-31').setUTCHours(0),
+        }
+    }
+    console.log(queryFilters)
+    return queryFilters;
+}
+
+const UserQueryFilter = (filters) => {
+    const queryFilters = {}
+    if (filters.name) {
+        queryFilters.name = { [Op.like]: `%${filters.name ?? ''}%` }
+    }
+
+    if (filters.email) {
+        queryFilters.email = { [Op.like]: `%${filters.email ?? ''}%` }
+    }
+    return queryFilters;
+}
+
+const RecommendationQueryFilter = (filters) => {
+    const queryFilters = {}
+
     if (filters.id_employee) {
         queryFilters.id_employee = filters.id_employee
     }
 
-    if (filters.id_vacation_time) {
-        queryFilters.id_vacation_time = filters.id_vacation_time
+    if (filters.id_recommended_employee) {
+        queryFilters.id_recommended_employee = filters.id_recommended_employee
+    }
+
+    if (filters.amount) {
+        queryFilters.amount = filters.amount
     }
 
     return queryFilters;
@@ -292,6 +359,7 @@ module.exports = {
     DepartmentQueryFilter,
     DiseaseQueryFilter,
     TypeAbsenceQueryFilter,
+    TypeLeaveQueryFilter,
     EmployeeReentryQueryFilter,
     EmployeeLeaveQueryFilter,
     EmployeeDiseaseQueryFilter,
@@ -304,5 +372,7 @@ module.exports = {
     AbsenceQueryFilter,
     UniformQueryFilter,
     VacationTimeQueryFilter,
-    EmployeeVacationQueryFilter
+    EmployeeVacationQueryFilter,
+    UserQueryFilter,
+    RecommendationQueryFilter
 }

@@ -3,6 +3,9 @@ const { EmployeeVacationModel } = require('./EmployeeVacationModel')
 const { VacationTimeModel } = require('../../vacationtime/infrastructure/VacationTimeModel');
 const { EmployeeVacationQueryFilter } = require('../../../helpers/QueryFilters');
 const { EmployeeModel } = require('../../employee/infrastructure/EmployeeModel');
+const { getDatesInRange, groupDatesByMonth } = require('../../../helpers/DateService');
+const { connection } = require('../../../config.db');
+
 
 
 const relations = [
@@ -29,7 +32,9 @@ class EmployeeVacationRepository extends IEmployeeVacationRepository {
         try {
             return await EmployeeVacationModel.findAll({
                 include: relations,
-                where: EmployeeVacationQueryFilter(filters)
+                where: EmployeeVacationQueryFilter(filters),
+                order: [['id', 'DESC'],]
+
             });
         }
         catch (err) {
@@ -92,6 +97,31 @@ class EmployeeVacationRepository extends IEmployeeVacationRepository {
                         id: id
                     }
                 })
+        }
+        catch (err) {
+            throw new Error(err.message)
+        }
+    }
+
+    async getDaysByVacationTimeId(id) {
+        try {
+            const dates = []
+            const employeeVacations = await EmployeeVacationModel.findAll({
+                where: {
+                    id_vacation_time: id
+                }
+            });
+
+            employeeVacations.forEach(eV => {
+                const datesInRange = getDatesInRange(eV.start_date, eV.end_date)
+                datesInRange.forEach(element => {
+                    dates.push(element)
+                })
+            });
+
+            return groupDatesByMonth(dates
+
+            );
         }
         catch (err) {
             throw new Error(err.message)

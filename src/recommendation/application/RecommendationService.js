@@ -9,8 +9,8 @@ class RecommendationService {
         this.iRecommendationPaymentRepository = iRecommendationPaymentRepository
     }
 
-    async getAllRecommendations() {
-        return await this.iRecommendationRepository.getAll();
+    async getAllRecommendations(filters) {
+        return await this.iRecommendationRepository.getAll(filters);
     }
 
     async getRecommendationById(id) {

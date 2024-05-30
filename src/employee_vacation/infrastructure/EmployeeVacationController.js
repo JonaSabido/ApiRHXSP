@@ -22,6 +22,17 @@ const getAll = async (request, response) => {
     return SendErrorData(response, 404, [], 'No data found')
 }
 
+const getDaysByVacationTimeId = async (request, response) => {
+    try {
+        const id = request.params.id
+        const data = await employeeVacationService.getDaysByVacationTimeId(id)
+        return SendSuccessData(response, 200, data, 'Ok')
+    }
+    catch (err) {
+        return SendErrorData(response, 404, null, err.message)
+    }
+}
+
 const getById = async (request, response) => {
     try {
         const id = request.params.id
@@ -72,8 +83,9 @@ const deleteById = async (request, response) => {
 
 module.exports = {
     getAll,
+    getDaysByVacationTimeId,
     getById,
     create,
     updateById,
-    deleteById
+    deleteById,
 };

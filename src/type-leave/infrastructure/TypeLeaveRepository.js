@@ -1,16 +1,16 @@
-const { UserQueryFilter } = require('../../../helpers/QueryFilters');
-const IUserRepository = require('../domain/IUserRepository');
-const { UserModel } = require('./UserModel')
+const { TypeLeaveQueryFilter } = require('../../../helpers/QueryFilters');
+const ITypeLeaveRepository = require('../domain/ITypeLeaveRepository');
+const { TypeLeaveModel } = require('./TypeLeaveModel')
 
-class UserRepository extends IUserRepository {
+class TypeLeaveRepository extends ITypeLeaveRepository {
     constructor() {
         super()
     }
 
     async getAll(filters) {
         try {
-            return await UserModel.findAll({
-                where: UserQueryFilter(filters)
+            return await TypeLeaveModel.findAll({
+                where: TypeLeaveQueryFilter(filters)
             });
         }
         catch (err) {
@@ -20,7 +20,7 @@ class UserRepository extends IUserRepository {
 
     async getById(id) {
         try {
-            const entity = await UserModel.findByPk(id)
+            const entity = await TypeLeaveModel.findByPk(id)
             if (!entity) {
                 throw new Error('Entity not found')
             }
@@ -31,22 +31,10 @@ class UserRepository extends IUserRepository {
         }
     }
 
-    async getByFilters(filters, attributes) {
-        try {
-            const entity = await UserModel.findOne({
-                where: filters,
-                attributes: attributes
-            })
-            return entity
-        }
-        catch (err) {
-            throw new Error(err.message)
-        }
-    }
 
     async create(data) {
         try {
-            return await UserModel.create(data)
+            return await TypeLeaveModel.create(data)
         }
         catch (err) {
             throw new Error(err.message)
@@ -55,7 +43,7 @@ class UserRepository extends IUserRepository {
 
     async update(id, data) {
         try {
-            return await UserModel.update(data, {
+            return await TypeLeaveModel.update(data, {
                 where: {
                     id: id
                 }
@@ -68,7 +56,7 @@ class UserRepository extends IUserRepository {
 
     async delete(id) {
         try {
-            return await UserModel.destroy(
+            return await TypeLeaveModel.destroy(
                 {
                     where: {
                         id: id
@@ -81,4 +69,4 @@ class UserRepository extends IUserRepository {
     }
 }
 
-module.exports = UserRepository;
+module.exports = TypeLeaveRepository;

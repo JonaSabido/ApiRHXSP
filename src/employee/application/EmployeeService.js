@@ -13,6 +13,13 @@ class EmployeeService {
         return await this.iEmployeeRepository.getAll(filters);
     }
 
+    async createAllVacationTimes() {
+        const employees = await this.iEmployeeRepository.getAll({});
+        for (const employee of employees) {
+            await this.iVacationTimeRepository.createInitialVacationTimes(employee)
+        }
+    }
+
     async getEmployeeById(id) {
         const entity = await this.iEmployeeRepository.getById(id);
         return new Employee(

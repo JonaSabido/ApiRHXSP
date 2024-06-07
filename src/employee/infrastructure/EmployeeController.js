@@ -1,13 +1,28 @@
+const { response } = require('express');
 const { SendSuccessData, SendErrorData } = require('../../../helpers/ApiResponse');
 const VacationTimeRepository = require('../../vacationtime/infrastructure/VacationTimeRepository');
 const EmployeeService = require('../application/EmployeeService');
 const EmployeeResponseDTO = require('../domain/EmployeeResponseDTO');
 const EmployeeRepository = require('./EmployeeRepository');
+const VacationTimeService = require('../../vacationtime/application/VacationTimeService');
 
 const employeeRepository = new EmployeeRepository();
 const vacationTimeRepository = new VacationTimeRepository()
 
 const employeeService = new EmployeeService(employeeRepository, vacationTimeRepository);
+const vacationTimeService = new VacationTimeService(vacationTimeRepository)
+
+const createAllVacationTimes = async (request, response) => {
+    await employeeService.createAllVacationTimes()
+    SendSuccessData(response, 200, 'Ok')
+}
+
+const createNextVacationTime = async () => {
+    const employees = await employeeService.getAllEmployees({})
+    for (const employee of employees) {
+        await vacationTimeService.createVacationTimeCurrentYear(employee.id)
+    }
+}
 
 const getAll = async (request, response) => {
     const data = await employeeService.getAllEmployees(request.query)
@@ -98,4 +113,6 @@ module.exports = {
     updateById,
     deleteById,
     saveFiles,
+    createAllVacationTimes,
+    createNextVacationTime
 };

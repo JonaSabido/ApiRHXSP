@@ -366,12 +366,18 @@ const RecommendationPaymentQueryFilter = (filters) => {
         queryFilters.id_paying_employee = filters.id_paying_employee
     }
 
+    if (filters.status) {
+        queryFilters.status = filters.status
+    }
+
     if (filters.start_date || filters.end_date) {
         queryFilters.payment_date = {
             [Op.gte]: new Date(filters.start_date ?? '0001-01-01').setUTCHours(0),
             [Op.lte]: new Date(filters.end_date ?? '9999-12-31').setUTCHours(0),
         }
     }
+
+
     return queryFilters;
 }
 

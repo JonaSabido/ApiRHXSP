@@ -66,6 +66,8 @@ class VacationTimeRepository extends IVacationTimeRepository {
         }
     }
 
+
+
     async createInitialVacationTimes(dataEmployee) {
         try {
             const today = getToday()

@@ -1,10 +1,24 @@
 const { SendSuccessData, SendErrorData } = require('../../../helpers/ApiResponse');
+const { getTodayFormat } = require('../../../helpers/DateService');
 const ContractService = require('../application/ContractService');
 const ContractResponseDTO = require('../domain/ContractResponseDTO');
 const ContractRepository = require('./ContractRepository');
 
 const contractRepository = new ContractRepository();
 const contractService = new ContractService(contractRepository);
+
+const checkExpired = async () => {
+    const contractExpireds = await contractService.getAllContracts({
+        type: 1,
+        end_end_date: getTodayFormat()
+    })
+
+    for (const contract of contractExpireds) {
+        await contractService.updateContract(contract.id, {
+            status: false
+        })
+    }
+}
 
 const getAll = async (request, response) => {
     const data = await contractService.getAllContracts(request.query)
@@ -81,5 +95,6 @@ module.exports = {
     getById,
     create,
     updateById,
-    deleteById
+    deleteById,
+    checkExpired
 };

@@ -2,6 +2,8 @@ const IRecommendationPaymentRepository = require('../domain/IRecommendationPayme
 const { RecommendationPaymentModel } = require('./RecommendationPaymentModel')
 const { EmployeeModel } = require('../../employee/infrastructure/EmployeeModel');
 const { RecommendationModel } = require('../../recommendation/infrastructure/RecommendationModel');
+const { where } = require('sequelize');
+const { RecommendationPaymentQueryFilter } = require('../../../helpers/QueryFilters');
 
 
 const relations = [
@@ -22,9 +24,12 @@ class RecommendationPaymentRepository extends IRecommendationPaymentRepository {
         super()
     }
 
-    async getAll() {
+    async getAll(filters) {
         try {
-            return await RecommendationPaymentModel.findAll({ include: relations });
+            return await RecommendationPaymentModel.findAll({
+                include: relations,
+                where: RecommendationPaymentQueryFilter(filters)
+            });
         }
         catch (err) {
             throw new Error(err.message)

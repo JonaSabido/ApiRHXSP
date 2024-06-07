@@ -2,6 +2,7 @@ class Contract {
     constructor(
         id,
         id_employee,
+        type,
         start_date,
         end_date,
         status,
@@ -11,6 +12,7 @@ class Contract {
     ) {
         this.id = id;
         this.id_employee = id_employee;
+        this.type = type;
         this.start_date = start_date;
         this.end_date = end_date;
         this.status = status;

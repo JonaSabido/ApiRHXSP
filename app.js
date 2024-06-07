@@ -27,6 +27,7 @@ const extraTimeRoute = require('./src/extra-time/infrastructure/ExtraTimeRoute.j
 const recruitmentMethodRoute = require('./src/recruitment-method/infrastructure/RecruitmentMethodRoute.js')
 const uniformRoute = require('./src/uniform/infrastructure/UniformRoute.js')
 const notificationRoute = require('./src/notification/infrastructure/NotificationRoute.js')
+const notificationUserRoute = require('./src/notification-user/infrastructure/NotificationUserRoute.js')
 const analyticsRoute = require('./src/analytic/infrastructure/AnalyticRoute.js')
 
 
@@ -35,7 +36,7 @@ const authRoute = require('./src/auth/infrastructure/AuthRoute.js');
 
 
 
-
+require('./cronjob');
 app.use(cors());
 app.use(express.json({ limit: '10mb' }))
 app.use(fileUpload({
@@ -48,7 +49,7 @@ app.use('/api',
     typeAbsenceRoute, absenceRoute, employeeReentryRoute, employeeLeavesRoute,
     vacationTimesRoute, employeeVacationRoute, recommendationRoute, recommendationPaymentRoute,
     userRoute, antidopingRoute, trainingRoute, extraTimeRoute, recruitmentMethodRoute, uniformRoute,
-    notificationRoute, analyticsRoute
+    notificationRoute, notificationUserRoute, analyticsRoute
 )
 
 app.use('/uploads', express.static('uploads'));

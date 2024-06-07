@@ -18,6 +18,10 @@ class IAnalyticRepository {
   async getActiveTimesByMonth(month, year) {
     throw new Error('Method not implemented');
   }
+
+  async getTypeLeavesByMonth(month, year) {
+    throw new Error('Method not implemented');
+  }
 }
 
 module.exports = IAnalyticRepository;

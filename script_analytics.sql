@@ -137,3 +137,28 @@ FROM
 WHERE
     employee_reentries.reentry_date >= '2024-05-01'
     AND employee_reentries.reentry_date <= '2024-05-31';
+
+--Absence Types
+SELECT
+    type_leaves.name as type_leave,
+    COUNT(employee_leaves.id) as total,
+    ROUND(
+        COUNT(employee_leaves.id) * 100.0 / (
+            SELECT
+                COUNT(*)
+            FROM
+                employee_leaves
+            WHERE
+                leave_date >= '2024-05-01'
+                AND leave_date <= '2024-05-31'
+        ),
+        2
+    ) as percentage
+FROM
+    employee_leaves
+    INNER JOIN type_leaves ON employee_leaves.id_type_leave = type_leaves.id
+WHERE
+    employee_leaves.leave_date >= '2024-05-01'
+    AND employee_leaves.leave_date <= '2024-05-31'
+GROUP BY
+    type_leaves.id;

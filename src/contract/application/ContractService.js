@@ -1,6 +1,6 @@
 const Contract = require("../domain/Contract");
 
-class ContractContractService {
+class ContractService {
     constructor(
         iContractRepository
     ) {
@@ -57,4 +57,4 @@ class ContractContractService {
 
 }
 
-module.exports = ContractContractService
+module.exports = ContractService

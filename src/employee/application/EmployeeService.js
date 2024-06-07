@@ -9,8 +9,8 @@ class EmployeeService {
         this.iVacationTimeRepository = iVacationTimeRepository
     }
 
-    async getAllEmployees() {
-        return await this.iEmployeeRepository.getAll();
+    async getAllEmployees(filters) {
+        return await this.iEmployeeRepository.getAll(filters);
     }
 
     async getEmployeeById(id) {

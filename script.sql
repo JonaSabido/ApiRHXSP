@@ -357,6 +357,8 @@ DELETE FROM employee_leaves;
 ALTER TABLE employee_leaves ADD COLUMN id_type_leave INT NOT NULL;
 ALTER TABLE employee_leaves ADD FOREIGN KEY (id_type_leave) REFERENCES type_leaves(id);
 
+delete from contracts;
+ALTER TABLE contracts ADD COLUMN type INT NOT NULL after id_employee;
 
 
 

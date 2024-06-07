@@ -3,6 +3,7 @@ const { EmployeeModel } = require('./EmployeeModel')
 const { DepartmentModel } = require('../../department/infrastructure/DepartmentModel');
 const { JobModel } = require('../../job/infrastructure/JobModel');
 const { RecruitmentMethodModel } = require('../../recruitment-method/infrastructure/RecruitmentMethodModel');
+const { EmployeeQueryFilter } = require('../../../helpers/QueryFilters');
 
 const relations = [
     {
@@ -27,11 +28,12 @@ class EmployeeRepository extends IEmployeeRepository {
         super()
     }
 
-    async getAll() {
+    async getAll(filters) {
         try {
             return await EmployeeModel.findAll({
                 include: relations,
-                order: [['id', 'DESC'],]
+                order: [['id', 'DESC']],
+                where: EmployeeQueryFilter(filters)
             });
         }
         catch (err) {

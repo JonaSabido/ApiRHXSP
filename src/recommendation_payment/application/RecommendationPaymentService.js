@@ -7,8 +7,8 @@ class RecommendationPaymentService {
         this.iRecommendationPaymentRepository = iRecommendationPaymentRepository
     }
 
-    async getAllRecommendationPayments() {
-        return await this.iRecommendationPaymentRepository.getAll();
+    async getAllRecommendationPayments(filters) {
+        return await this.iRecommendationPaymentRepository.getAll(filters);
     }
 
     async getRecommendationPaymentById(id) {

@@ -13,12 +13,13 @@ class AnalyticRepository extends IAnalyticRepository {
     constructor() {
         super()
     }
+    
 
     async getLeavesByMonth(month, year) {
         try {
             const query = `
                 SELECT 
-                    departments.name as department, 
+                    departments.name as label, 
                     COUNT(employee_leaves.id) as total,
                     ROUND(COUNT(employee_leaves.id) * 100.0 / (SELECT COUNT(*) 
                                                         FROM employee_leaves 
@@ -52,7 +53,7 @@ class AnalyticRepository extends IAnalyticRepository {
         try {
             const query = `
                 SELECT
-                    departments.name as department,
+                    departments.name as label,
                     COUNT(employees.id) as total,
                     ROUND(
                         COUNT(employees.id) * 100.0 / (
@@ -127,7 +128,7 @@ class AnalyticRepository extends IAnalyticRepository {
             )
             
             SELECT
-                recruitment_methods.name as recruitment_method,
+                recruitment_methods.name as label,
                 COUNT(employees.id) as total,
                 ROUND(
                     COUNT(employees.id) * 100.0 / (
@@ -177,7 +178,7 @@ class AnalyticRepository extends IAnalyticRepository {
         try {
             const query = `
             SELECT
-                departments.name as department,
+                departments.name as label,
                 COUNT(employees.id) as total,
                 ROUND(
                     COUNT(employees.id) * 100.0 / (
@@ -213,6 +214,46 @@ class AnalyticRepository extends IAnalyticRepository {
         }
     }
 
+    async getTypeLeavesByMonth(month, year) {
+        try {
+            const query = `
+                SELECT
+                    type_leaves.name as label,
+                    COUNT(employee_leaves.id) as total,
+                    ROUND(
+                        COUNT(employee_leaves.id) * 100.0 / (
+                            SELECT
+                                COUNT(*)
+                            FROM
+                                employee_leaves
+                            WHERE
+                                leave_date >= '${year}-${month}-01'
+                                AND leave_date <= '${year}-${month}-31'
+                        ),
+                        2
+                    ) as percentage
+                FROM
+                    employee_leaves
+                    INNER JOIN type_leaves ON employee_leaves.id_type_leave = type_leaves.id
+                WHERE
+                    employee_leaves.leave_date >= '${year}-${month}-01'
+                    AND employee_leaves.leave_date <= '${year}-${month}-31'
+                GROUP BY
+                    type_leaves.id;
+                `;
+
+            const data = await connection.query(query, {
+                replacements: {}, // Reemplaza :userId con el valor real
+                type: connection.QueryTypes.SELECT,
+            });
+
+            return data
+        }
+        catch (err) {
+            throw new Error(err.message)
+        }
+    }
+
     async getActiveTimesByMonth(month, year) {
         try {
             const leaves = await EmployeeLeaveModel.findAll({
@@ -229,6 +270,7 @@ class AnalyticRepository extends IAnalyticRepository {
             for (const leave of leaves) {
                 const last_reentry = await EmployeeReentryModel.findOne({
                     where: {
+                        id_employee: leave.id_employee,
                         reentry_date: {
                             [Op.lte]: new Date(leave.leave_date).setUTCHours(0),
                         }
@@ -249,35 +291,52 @@ class AnalyticRepository extends IAnalyticRepository {
             }
             const response = []
 
-            response.push({
-                range: 'Menos de 1 mes',
-                total: differenceDays.filter(x => x <= 29).length,
-                percentage: (differenceDays.filter(x => x <= 29).length / differenceDays.length * 100).toFixed(2)
-            })
+            console.log(differenceDays)
 
-            response.push({
-                range: '1 a 3 meses',
-                total: differenceDays.filter(x => x >= 30 && x <= 119).length,
-                percentage: (differenceDays.filter(x => x >= 30 && x <= 119).length / differenceDays.length * 100).toFixed(2)
-            })
+            const firstParemeter = differenceDays.filter(x => x <= 29).length
+            if (firstParemeter > 0) {
+                response.push({
+                    label: 'Menos de 1 mes',
+                    total: firstParemeter,
+                    percentage: (firstParemeter / differenceDays.length * 100).toFixed(2)
+                })
+            }
 
-            response.push({
-                range: '4 a 11 meses',
-                total: differenceDays.filter(x => x >= 120 && x <= 364).length,
-                percentage: (differenceDays.filter(x => x >= 120 && x <= 364).length / differenceDays.length * 100).toFixed(2)
-            })
+            const secondParemeter = differenceDays.filter(x => x >= 30 && x <= 119).length
+            if (secondParemeter > 0) {
+                response.push({
+                    label: '1 a 3 meses',
+                    total: secondParemeter,
+                    percentage: (secondParemeter / differenceDays.length * 100).toFixed(2)
+                })
+            }
 
-            response.push({
-                range: '1 a 3 años',
-                total: differenceDays.filter(x => x >= 365 && x <= 1459).length,
-                percentage: (differenceDays.filter(x => x >= 365 && x <= 1459).length / differenceDays.length * 100).toFixed(2)
-            })
+            const thirdParemeter = differenceDays.filter(x => x >= 120 && x <= 364).length
+            if (thirdParemeter > 0) {
+                response.push({
+                    label: '4 a 11 meses',
+                    total: thirdParemeter,
+                    percentage: (thirdParemeter / differenceDays.length * 100).toFixed(2)
+                })
+            }
 
-            response.push({
-                range: 'Más de 4 años',
-                total: differenceDays.filter(x => x >= 1460).length,
-                percentage: (differenceDays.filter(x => x >= 1460).length / differenceDays.length * 100).toFixed(2)
-            })
+            const fourthParemeter = differenceDays.filter(x => x >= 365 && x <= 1459).length
+            if (fourthParemeter > 0) {
+                response.push({
+                    label: '1 a 3 años',
+                    total: fourthParemeter,
+                    percentage: (fourthParemeter / differenceDays.length * 100).toFixed(2)
+                })
+            }
+
+            const fifthParemeter = differenceDays.filter(x => x >= 1460).length
+            if (fifthParemeter > 0) {
+                response.push({
+                    label: 'Más de 4 años',
+                    total: fifthParemeter,
+                    percentage: (fifthParemeter / differenceDays.length * 100).toFixed(2)
+                })
+            }
 
             return response;
 

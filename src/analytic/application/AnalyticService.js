@@ -22,6 +22,10 @@ class AnalyticService {
         return await this.iAnalyticRepository.getValidationsByMonth(month, year);
     }
 
+    async getTypeLeavesByMonth(month, year) {
+        return await this.iAnalyticRepository.getTypeLeavesByMonth(month, year);
+    }
+
     async getActiveTimesByMonth(month, year) {
         return await this.iAnalyticRepository.getActiveTimesByMonth(month, year);
     }

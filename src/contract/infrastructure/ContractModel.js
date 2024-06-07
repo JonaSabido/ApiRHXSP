@@ -8,6 +8,10 @@ const ContractModel = connection.define('contract', {
         type: DataTypes.INTEGER,
         allowNull: false
     },
+    type: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
     start_date: {
         type: DataTypes.DATEONLY,
         allowNull: false,
@@ -23,7 +27,6 @@ const ContractModel = connection.define('contract', {
 })
 
 ContractModel.belongsTo(EmployeeModel, { as: 'employee', foreignKey: 'id_employee' })
-
 
 module.exports = {
     ContractModel

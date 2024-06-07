@@ -7,7 +7,7 @@ const recommendationPaymentRepository = new RecommendationPaymentRepository();
 const recommendationPaymentService = new RecommendationPaymentService(recommendationPaymentRepository);
 
 const getAll = async (request, response) => {
-    const data = await recommendationPaymentService.getAllRecommendationPayments()
+    const data = await recommendationPaymentService.getAllRecommendationPayments(request.query)
     if (data.length) {
         const list = []
         data.forEach(element => {

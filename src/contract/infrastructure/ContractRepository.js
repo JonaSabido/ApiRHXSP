@@ -44,6 +44,9 @@ class ContractRepository extends IContractRepository {
 
     async create(data) {
         try {
+            if (data.type == 2) {
+                data.end_date = '0000-00-00'
+            }
             return await ContractModel.create(data)
         }
         catch (err) {

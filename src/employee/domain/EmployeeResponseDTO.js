@@ -24,6 +24,7 @@ class EmployeeResponseDTO {
         this.curp = employee.curp;
         this.ssp = employee.ssp;
         this.natal_date = employee.natal_date;
+        this.natal_date_formatted = dateFormatted(employee.natal_date);
         this.email = employee.email;
         this.phone = employee.phone;
         this.shirt_size = employee.shirt_size;

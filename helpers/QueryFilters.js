@@ -131,6 +131,10 @@ const ContractQueryFilter = (filters) => {
         queryFilters.id_employee = filters.id_employee
     }
 
+    if (filters.type) {
+        queryFilters.type = filters.type
+    }
+
     if (filters.status) {
         queryFilters.status = filters.status
     }
@@ -319,7 +323,6 @@ const EmployeeVacationQueryFilter = (filters) => {
             [Op.lte]: new Date(filters.end_end_date ?? '9999-12-31').setUTCHours(0),
         }
     }
-    console.log(queryFilters)
     return queryFilters;
 }
 
@@ -353,6 +356,125 @@ const RecommendationQueryFilter = (filters) => {
     return queryFilters;
 }
 
+const RecommendationPaymentQueryFilter = (filters) => {
+    const queryFilters = {}
+    if (filters.id_recommendation) {
+        queryFilters.id_recommendation = filters.id_recommendation
+    }
+
+    if (filters.id_paying_employee) {
+        queryFilters.id_paying_employee = filters.id_paying_employee
+    }
+
+    if (filters.start_date || filters.end_date) {
+        queryFilters.payment_date = {
+            [Op.gte]: new Date(filters.start_date ?? '0001-01-01').setUTCHours(0),
+            [Op.lte]: new Date(filters.end_date ?? '9999-12-31').setUTCHours(0),
+        }
+    }
+    return queryFilters;
+}
+
+const NotificationQueryFilter = (filters) => {
+    const queryFilters = {}
+
+    if (filters.id_notification_type) {
+        queryFilters.id_notification_type = filters.id_notification_type
+    }
+
+    if (filters.title) {
+        queryFilters.title = { [Op.like]: `%${filters.title ?? ''}%` }
+    }
+
+    if (filters.description) {
+        queryFilters.description = { [Op.like]: `%${filters.description ?? ''}%` }
+    }
+
+    return queryFilters;
+}
+
+const NotificationUserQueryFilter = (filters) => {
+    const queryFilters = {}
+
+    if (filters.id_notification) {
+        queryFilters.id_notification = filters.id_notification
+    }
+
+    if (filters.id_user) {
+        queryFilters.id_user = filters.id_user
+    }
+
+    if (filters.status) {
+        queryFilters.status = filters.status
+    }
+
+    return queryFilters;
+}
+
+const EmployeeQueryFilter = (filters) => {
+    const queryFilters = {}
+
+    if (filters.id_department) {
+        queryFilters.id_department = filters.id_department
+    }
+
+    if (filters.id_job) {
+        queryFilters.id_job = filters.id_job
+    }
+
+    if (filters.id_recruitment_method) {
+        queryFilters.id_recruitment_method = filters.id_recruitment_method
+    }
+
+    if (filters.code) {
+        queryFilters.code = { [Op.like]: `%${filters.code ?? ''}%` }
+    }
+
+    if (filters.name) {
+        queryFilters.name = { [Op.like]: `%${filters.name ?? ''}%` }
+    }
+
+    if (filters.sure_name) {
+        queryFilters.sure_name = { [Op.like]: `%${filters.sure_name ?? ''}%` }
+    }
+
+    if (filters.last_name) {
+        queryFilters.last_name = { [Op.like]: `%${filters.last_name ?? ''}%` }
+    }
+
+    if (filters.entry_start_date || filters.entry_end_date) {
+        queryFilters.natal_date = {
+            [Op.gte]: new Date(filters.entry_start_date ?? '0001-01-01').setUTCHours(0),
+            [Op.lte]: new Date(filters.entry_end_date ?? '9999-12-31').setUTCHours(0),
+        }
+    }
+
+    if (filters.status) {
+        queryFilters.status = filters.status
+    }
+
+    if (filters.gender) {
+        queryFilters.gender = filters.gender
+    }
+
+    if (filters.ssp) {
+        queryFilters.ssp = filters.ssp
+    }
+
+    if (filters.natal_start_date || filters.natal_end_date) {
+        queryFilters.natal_date = {
+            [Op.gte]: new Date(filters.natal_start_date ?? '0001-01-01').setUTCHours(0),
+            [Op.lte]: new Date(filters.natal_end_date ?? '9999-12-31').setUTCHours(0),
+        }
+    }
+
+    if (filters.has_children) {
+        queryFilters.has_children = filters.has_children
+    }
+
+    return queryFilters;
+}
+
 module.exports = {
     AreaQueryFilter,
     JobQueryFilter,
@@ -374,5 +496,9 @@ module.exports = {
     VacationTimeQueryFilter,
     EmployeeVacationQueryFilter,
     UserQueryFilter,
-    RecommendationQueryFilter
+    RecommendationQueryFilter,
+    RecommendationPaymentQueryFilter,
+    NotificationQueryFilter,
+    NotificationUserQueryFilter,
+    EmployeeQueryFilter
 }

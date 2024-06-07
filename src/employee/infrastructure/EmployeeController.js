@@ -10,7 +10,7 @@ const vacationTimeRepository = new VacationTimeRepository()
 const employeeService = new EmployeeService(employeeRepository, vacationTimeRepository);
 
 const getAll = async (request, response) => {
-    const data = await employeeService.getAllEmployees()
+    const data = await employeeService.getAllEmployees(request.query)
     if (data.length) {
         const list = []
         data.forEach(element => {

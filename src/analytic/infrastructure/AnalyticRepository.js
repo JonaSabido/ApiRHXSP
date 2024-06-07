@@ -5,7 +5,7 @@ const { EmployeeReentryModel } = require('../../employee-reentry/infrastructure/
 
 const { Op } = require("sequelize");
 const { EmployeeModel } = require('../../employee/infrastructure/EmployeeModel');
-const { getDifferenceDaysBetweenDates } = require('../../../helpers/DateService');
+const { getDifferenceDaysBetweenDates, getLastDayByMonth } = require('../../../helpers/DateService');
 
 
 
@@ -13,7 +13,7 @@ class AnalyticRepository extends IAnalyticRepository {
     constructor() {
         super()
     }
-    
+
 
     async getLeavesByMonth(month, year) {
         try {
@@ -24,7 +24,7 @@ class AnalyticRepository extends IAnalyticRepository {
                     ROUND(COUNT(employee_leaves.id) * 100.0 / (SELECT COUNT(*) 
                                                         FROM employee_leaves 
                                                         WHERE leave_date >= '${year}-${month}-01' 
-                                                        AND leave_date <= '${year}-${month}-31'), 2) as percentage
+                                                        AND leave_date <= '${year}-${month}-${getLastDayByMonth(month, year)}'), 2) as percentage
                 FROM 
                     employee_leaves 
                 INNER JOIN 
@@ -33,7 +33,7 @@ class AnalyticRepository extends IAnalyticRepository {
                     departments ON employees.id_department = departments.id 
                 WHERE 
                     employee_leaves.leave_date >= '${year}-${month}-01' 
-                    AND employee_leaves.leave_date <= '${year}-${month}-31' 
+                    AND employee_leaves.leave_date <= '${year}-${month}-${getLastDayByMonth(month, year)}' 
                 GROUP BY departments.id
             `;
 
@@ -69,11 +69,11 @@ class AnalyticRepository extends IAnalyticRepository {
                                     WHERE
                                         (
                                             employee_reentries.reentry_date >= '${year}-${month}-01'
-                                            AND employee_reentries.reentry_date <= '${year}-${month}-31'
+                                            AND employee_reentries.reentry_date <= '${year}-${month}-${getLastDayByMonth(month, year)}'
                                         )
                                         OR (
                                             employees.entry_date >= '${year}-${month}-01'
-                                            AND employees.entry_date <= '${year}-${month}-31'
+                                            AND employees.entry_date <= '${year}-${month}-${getLastDayByMonth(month, year)}'
                                         )
                                     UNION
                                     SELECT
@@ -82,7 +82,7 @@ class AnalyticRepository extends IAnalyticRepository {
                                         employees
                                     WHERE
                                         employees.entry_date >= '${year}-${month}-01'
-                                        AND employees.entry_date <= '${year}-${month}-31'
+                                        AND employees.entry_date <= '${year}-${month}-${getLastDayByMonth(month, year)}'
                                 ) AS subquery
                         ),
                         2
@@ -94,11 +94,11 @@ class AnalyticRepository extends IAnalyticRepository {
                 WHERE
                     (
                         employee_reentries.reentry_date >= '${year}-${month}-01'
-                        AND employee_reentries.reentry_date <= '${year}-${month}-31'
+                        AND employee_reentries.reentry_date <= '${year}-${month}-${getLastDayByMonth(month, year)}'
                     )
                     OR (
                         employees.entry_date >= '${year}-${month}-01'
-                        AND employees.entry_date <= '${year}-${month}-31'
+                        AND employees.entry_date <= '${year}-${month}-${getLastDayByMonth(month, year)}'
                     )
                 GROUP BY
                     departments.id
@@ -121,9 +121,9 @@ class AnalyticRepository extends IAnalyticRepository {
             const query = `
             WITH total_counts AS (
                 SELECT 
-                    (SELECT COUNT(*) FROM employees WHERE entry_date >= '${year}-${month}-01' AND entry_date <= '${year}-${month}-31') 
+                    (SELECT COUNT(*) FROM employees WHERE entry_date >= '${year}-${month}-01' AND entry_date <= '${year}-${month}-${getLastDayByMonth(month, year)}') 
                     + 
-                    (SELECT COUNT(*) FROM employee_reentries WHERE reentry_date >= '${year}-${month}-01' AND reentry_date <= '${year}-${month}-31') 
+                    (SELECT COUNT(*) FROM employee_reentries WHERE reentry_date >= '${year}-${month}-01' AND reentry_date <= '${year}-${month}-${getLastDayByMonth(month, year)}') 
                     AS total
             )
             
@@ -140,7 +140,7 @@ class AnalyticRepository extends IAnalyticRepository {
                 INNER JOIN recruitment_methods ON employees.id_recruitment_method = recruitment_methods.id
             WHERE
                 employees.entry_date >= '${year}-${month}-01'
-                AND employees.entry_date <= '${year}-${month}-31'
+                AND employees.entry_date <= '${year}-${month}-${getLastDayByMonth(month, year)}'
             GROUP BY
                 recruitment_methods.id
             
@@ -159,7 +159,7 @@ class AnalyticRepository extends IAnalyticRepository {
                 INNER JOIN employees ON employee_reentries.id_employee = employees.id
             WHERE
                 employee_reentries.reentry_date >= '${year}-${month}-01'
-                AND employee_reentries.reentry_date <= '${year}-${month}-31';
+                AND employee_reentries.reentry_date <= '${year}-${month}-${getLastDayByMonth(month, year)}';
             `;
 
             const data = await connection.query(query, {
@@ -188,7 +188,7 @@ class AnalyticRepository extends IAnalyticRepository {
                             employees
                         WHERE
                             entry_date >= '${year}-${month}-01'
-                            AND entry_date <= '${year}-${month}-31'
+                            AND entry_date <= '${year}-${month}-${getLastDayByMonth(month, year)}'
                     ),
                     2
                 ) as percentage
@@ -197,7 +197,7 @@ class AnalyticRepository extends IAnalyticRepository {
                 INNER JOIN departments ON employees.id_department = departments.id
             WHERE
                 employees.entry_date >= '${year}-${month}-01'
-                AND employees.entry_date <= '${year}-${month}-31'
+                AND employees.entry_date <= '${year}-${month}-${getLastDayByMonth(month, year)}'
             GROUP BY
                 departments.id;
             `;
@@ -228,7 +228,7 @@ class AnalyticRepository extends IAnalyticRepository {
                                 employee_leaves
                             WHERE
                                 leave_date >= '${year}-${month}-01'
-                                AND leave_date <= '${year}-${month}-31'
+                                AND leave_date <= '${year}-${month}-${getLastDayByMonth(month, year)}'
                         ),
                         2
                     ) as percentage
@@ -237,7 +237,7 @@ class AnalyticRepository extends IAnalyticRepository {
                     INNER JOIN type_leaves ON employee_leaves.id_type_leave = type_leaves.id
                 WHERE
                     employee_leaves.leave_date >= '${year}-${month}-01'
-                    AND employee_leaves.leave_date <= '${year}-${month}-31'
+                    AND employee_leaves.leave_date <= '${year}-${month}-${getLastDayByMonth(month, year)}'
                 GROUP BY
                     type_leaves.id;
                 `;
@@ -260,7 +260,7 @@ class AnalyticRepository extends IAnalyticRepository {
                 where: {
                     leave_date: {
                         [Op.gte]: new Date(`${year}-${month}-01`).setUTCHours(0),
-                        [Op.lte]: new Date(`${year}-${month}-31`).setUTCHours(0),
+                        [Op.lte]: new Date(`${year}-${month}-${getLastDayByMonth(month, year)}`).setUTCHours(0),
                     }
                 }
             });

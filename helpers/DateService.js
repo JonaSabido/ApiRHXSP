@@ -15,6 +15,35 @@ const getTodayFormat = () => {
     return `${year}-${month}-${day}`;
 }
 
+const getLastDayByMonth = (month, year) => {
+    // Verificar que el mes esté en el rango válido
+    month = Number(month)
+    
+    if (month < 1 || month > 12) {
+        throw new Error('El mes debe ser un número entre 1 y 12.');
+    }
+
+    // Array con los últimos días de cada mes por defecto (no bisiesto)
+    const lastDay = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+    // Si el mes es febrero, verificar si es un año bisiesto
+    if (month === 2) {
+        // Comprobar si el año es bisiesto
+        const isLeapYear = (year) => {
+            if ((year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0)) {
+                return true;
+            }
+            return false;
+        };
+
+        // Si es bisiesto, el último día de febrero es 29
+        return isLeapYear(year) ? 29 : 28;
+    }
+
+    // Devolver el último día del mes
+    return lastDay[month - 1];
+};
+
 const getDifferenceDaysBetweenDates = (first_date, second_date) => {
     const oneDay = 24 * 60 * 60 * 1000; // milisegundos en un día
     first_date = new Date(`${first_date}T00:00:00`)
@@ -85,5 +114,6 @@ module.exports = {
     getDatesInRange,
     groupDatesByMonth,
     getTodayFormat,
-    getDifferenceDaysBetweenDatesNoFirstDay
+    getDifferenceDaysBetweenDatesNoFirstDay,
+    getLastDayByMonth
 }

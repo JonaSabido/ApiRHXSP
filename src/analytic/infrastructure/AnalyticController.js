@@ -113,8 +113,9 @@ const getEntriesByMonth = async (request, response) => {
 }
 
 const getRecruitmentsByMonth = async (request, response) => {
-    const data = await analyticService.getRecruitmentsByMonth(request.query.month, request.query.year)
+    let data = await analyticService.getRecruitmentsByMonth(request.query.month, request.query.year)
     if (data.length) {
+        data = data.filter(x => x.total != 0)
         return SendSuccessData(response, 200, data, 'Ok')
     }
     return SendErrorData(response, 404, [], 'No data found')

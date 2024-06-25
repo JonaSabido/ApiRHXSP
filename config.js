@@ -8,7 +8,7 @@ const DB_USER = process.env.DB_USER || 'root'
 
 const DB_PASSWORD = process.env.DB_PASSWORD || ''
 
-const DB_NAME = process.env.DB_NAME || 'rhxsp_prod_2'
+const DB_NAME = process.env.DB_NAME || 'rhxsp_prod'
 
 const SECRET_KEY = process.env.SECRET_KEY || 'adjkoasdjsd'
 

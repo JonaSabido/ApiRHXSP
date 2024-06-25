@@ -20,6 +20,7 @@ class AntidopingRepository extends IAntidopingRepository {
         try {
             return await AntidopingModel.findAll({
                 include: relations,
+                order: [['id', 'DESC']],
                 where: AntidopingQueryFilter(filters)
             });
         }

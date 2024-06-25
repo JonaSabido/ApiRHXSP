@@ -20,6 +20,7 @@ class TrainingRepository extends ITrainingRepository {
         try {
             return await TrainingModel.findAll({
                 include: relations,
+                order: [['id', 'DESC']],
                 where: TrainingQueryFilter(filters)
             });
         }

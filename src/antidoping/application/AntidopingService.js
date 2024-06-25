@@ -13,12 +13,12 @@ class AntidopingService {
 
     async getAntidopingById(id) {
         const entity = await this.iAntidopingRepository.getById(id);
-        return new Antidoping(entity.id, entity.id_employee, entity.createdAt, entity.updatedAt, entity.employee);
+        return new Antidoping(entity.id, entity.id_employee, entity.result, entity.comments, entity.createdAt, entity.updatedAt, entity.employee);
     }
 
     async createAntidoping(data) {
         const newEntity = await this.iAntidopingRepository.create(data)
-        return new Antidoping(newEntity.id, newEntity.id_employee, newEntity.createdAt, newEntity.updatedAt);
+        return new Antidoping(newEntity.id, newEntity.id_employee, newEntity.result, newEntity.comments, newEntity.createdAt, newEntity.updatedAt);
     }
 
     async updateAntidoping(id, data) {

@@ -8,9 +8,16 @@ const AntidopingModel = connection.define('antidoping', {
         type: DataTypes.INTEGER,
         allowNull: false
     },
+    result: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    comments: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
 })
 
-AntidopingModel.belongsTo(EmployeeModel, { as: 'employee', foreignKey: 'id_employee' })
 
 module.exports = {
     AntidopingModel

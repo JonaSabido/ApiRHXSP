@@ -16,8 +16,8 @@ class EmployeeResponseDTO {
         this.last_name = employee.last_name;
         this.entry_date = employee.entry_date;
         this.entry_date_formatted = dateFormatted(employee.entry_date);
-        this.entry_month = this.getMonth(parseInt(employee.entry_date?.slice(5, 7)))
-        this.entry_year = employee.entry_date?.slice(0, 4)
+        this.entry_month = this.getMonth(parseInt(employee.entry_date?.slice(5, 7)));
+        this.entry_year = employee.entry_date?.slice(0, 4);
         this.gender = employee.gender;
         this.nss = employee.nss;
         this.rfc = employee.rfc;
@@ -34,14 +34,25 @@ class EmployeeResponseDTO {
         this.address = employee.address;
         this.cp = employee.cp;
         this.comments = employee.comments;
+        this.has_birth_certificate = employee.has_birth_certificate;  
+        this.has_identification = employee.has_identification;  
+        this.has_curp = employee.has_curp;  
+        this.has_nss = employee.has_nss;  
+        this.has_address_certification = employee.has_address_certification;  
+        this.has_studies_certification = employee.has_studies_certification;  
+        this.has_tax_certificate = employee.has_tax_certificate;  
+        this.has_smn = employee.has_smn;  
+        this.has_no_criminal_certificate = employee.has_no_criminal_certificate;  
+        this.has_health_certificate = employee.has_health_certificate;  
+        this.has_sv = employee.has_sv;  
         this.status = employee.status;
-        this.files = new EmployeeFileNameResponseDTO(employee.id)
+        this.files = new EmployeeFileNameResponseDTO(employee.id);
         this.createdAt = employee.createdAt;
         this.updatedAt = employee.updatedAt;
         this.department = employee.department;
         this.job = employee.job;
         this.recruitment_method = employee.recruitment_method;
-
+        this.antidoping = employee.antidoping;
     }
 
     getMonth(number) {
@@ -88,4 +99,4 @@ class EmployeeResponseDTO {
     }
 }
 
-module.exports = EmployeeResponseDTO
+module.exports = EmployeeResponseDTO;

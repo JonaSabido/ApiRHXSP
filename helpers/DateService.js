@@ -15,6 +15,16 @@ const getTodayFormat = () => {
     return `${year}-${month}-${day}`;
 }
 
+const getDateFormat = (date) => {
+    const options = { timeZone: 'America/Mexico_City' };
+
+    const year = date.toLocaleString('es-MX', { ...options, year: 'numeric' });
+    const month = date.toLocaleString('es-MX', { ...options, month: '2-digit' });
+    const day = date.toLocaleString('es-MX', { ...options, day: '2-digit' });
+
+    return `${year}-${month}-${day}`;
+}
+
 const getLastDayByMonth = (month, year) => {
     // Verificar que el mes esté en el rango válido
     month = Number(month)
@@ -115,5 +125,6 @@ module.exports = {
     groupDatesByMonth,
     getTodayFormat,
     getDifferenceDaysBetweenDatesNoFirstDay,
-    getLastDayByMonth
+    getLastDayByMonth,
+    getDateFormat
 }

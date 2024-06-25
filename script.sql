@@ -360,5 +360,19 @@ ALTER TABLE employee_leaves ADD FOREIGN KEY (id_type_leave) REFERENCES type_leav
 delete from contracts;
 ALTER TABLE contracts ADD COLUMN type INT NOT NULL after id_employee;
 
+ALTER TABLE employees ADD COLUMN has_birth_certificate BOOLEAN NOT NULL DEFAULT FALSE AFTER comments;
+ALTER TABLE employees ADD COLUMN has_identification BOOLEAN NOT NULL DEFAULT FALSE AFTER has_birth_certificate;
+ALTER TABLE employees ADD COLUMN has_curp BOOLEAN NOT NULL DEFAULT FALSE AFTER has_identification;
+ALTER TABLE employees ADD COLUMN has_nss BOOLEAN NOT NULL DEFAULT FALSE AFTER has_curp;
+ALTER TABLE employees ADD COLUMN has_address_certification BOOLEAN NOT NULL DEFAULT FALSE AFTER has_nss;
+ALTER TABLE employees ADD COLUMN has_studies_certification BOOLEAN NOT NULL DEFAULT FALSE AFTER has_address_certification;
+ALTER TABLE employees ADD COLUMN has_tax_certificate BOOLEAN NOT NULL DEFAULT FALSE AFTER has_studies_certification;
+ALTER TABLE employees ADD COLUMN has_smn BOOLEAN NOT NULL DEFAULT FALSE AFTER has_tax_certificate;
+ALTER TABLE employees ADD COLUMN has_no_criminal_certificate BOOLEAN NOT NULL DEFAULT FALSE AFTER has_smn;
+ALTER TABLE employees ADD COLUMN has_health_certificate BOOLEAN NOT NULL DEFAULT FALSE AFTER has_no_criminal_certificate;
+ALTER TABLE employees ADD COLUMN has_sv BOOLEAN NOT NULL DEFAULT FALSE AFTER has_health_certificate;
+ALTER TABLE antidopings ADD COLUMN result VARCHAR(15) NOT NULL AFTER id_employee;
+ALTER TABLE antidopings ADD COLUMN comments VARCHAR(500) NOT NULL AFTER result;
+
 
 

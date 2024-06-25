@@ -22,6 +22,7 @@ class EmployeeService {
 
     async getEmployeeById(id) {
         const entity = await this.iEmployeeRepository.getById(id);
+
         return new Employee(
             entity.id,
             entity.id_department,
@@ -47,6 +48,17 @@ class EmployeeService {
             entity.address,
             entity.cp,
             entity.comments,
+            entity.has_birth_certificate,
+            entity.has_identification,
+            entity.has_curp,
+            entity.has_nss,
+            entity.has_address_certification,
+            entity.has_studies_certification,
+            entity.has_tax_certificate,
+            entity.has_smn,
+            entity.has_no_criminal_certificate,
+            entity.has_health_certificate,
+            entity.has_sv,
             entity.status,
             entity.createdAt,
             entity.updatedAt,
@@ -57,8 +69,9 @@ class EmployeeService {
     }
 
     async createEmployee(data) {
-        const newEntity = await this.iEmployeeRepository.create(data)
-        await this.iVacationTimeRepository.createInitialVacationTimes(newEntity)
+        const newEntity = await this.iEmployeeRepository.create(data);
+        await this.iVacationTimeRepository.createInitialVacationTimes(newEntity);
+        
         return new Employee(
             newEntity.id,
             newEntity.id_department,
@@ -84,11 +97,23 @@ class EmployeeService {
             newEntity.address,
             newEntity.cp,
             newEntity.comments,
+            newEntity.has_birth_certificate,
+            newEntity.has_identification,
+            newEntity.has_curp,
+            newEntity.has_nss,
+            newEntity.has_address_certification,
+            newEntity.has_studies_certification,
+            newEntity.has_tax_certificate,
+            newEntity.has_smn,
+            newEntity.has_no_criminal_certificate,
+            newEntity.has_health_certificate,
+            newEntity.has_sv,
             newEntity.status,
             newEntity.createdAt,
             newEntity.updatedAt
         );
     }
+
 
     async updateEmployee(id, data) {
         await this.iEmployeeRepository.getById(id);

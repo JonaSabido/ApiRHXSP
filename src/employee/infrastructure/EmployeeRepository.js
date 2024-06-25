@@ -4,6 +4,7 @@ const { DepartmentModel } = require('../../department/infrastructure/DepartmentM
 const { JobModel } = require('../../job/infrastructure/JobModel');
 const { RecruitmentMethodModel } = require('../../recruitment-method/infrastructure/RecruitmentMethodModel');
 const { EmployeeQueryFilter } = require('../../../helpers/QueryFilters');
+const { AntidopingModel } = require('../../antidoping/infrastructure/AntidopingModel');
 
 const relations = [
     {
@@ -20,6 +21,11 @@ const relations = [
         model: RecruitmentMethodModel,
         attributes: ['id', 'name'],
         as: 'recruitment_method'
+    },
+    {
+        model: AntidopingModel,
+        attributes: ['id', 'result', 'comments'],
+        as: 'antidoping'
     },
 ]
 

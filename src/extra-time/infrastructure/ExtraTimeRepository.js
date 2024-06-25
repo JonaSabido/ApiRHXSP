@@ -20,6 +20,7 @@ class ExtraTimeRepository extends IExtraTimeRepository {
         try {
             return await ExtraTimeModel.findAll({
                 include: relations,
+                order: [['id', 'DESC']],
                 where: ExtraTimeQueryFilter(filters)
             });
         }

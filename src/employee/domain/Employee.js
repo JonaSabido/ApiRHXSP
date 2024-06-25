@@ -24,6 +24,17 @@ class Employee {
         address,
         cp,
         comments,
+        has_birth_certificate,
+        has_identification,
+        has_curp,
+        has_nss,
+        has_address_certification,
+        has_studies_certification,
+        has_tax_certificate,
+        has_smn,
+        has_no_criminal_certificate,
+        has_health_certificate,
+        has_sv,
         status,
         createdAt,
         updatedAt,
@@ -55,6 +66,17 @@ class Employee {
         this.address = address;
         this.cp = cp;
         this.comments = comments;
+        this.has_birth_certificate = has_birth_certificate;
+        this.has_identification = has_identification;
+        this.has_curp = has_curp;
+        this.has_nss = has_nss;
+        this.has_address_certification = has_address_certification;
+        this.has_studies_certification = has_studies_certification;
+        this.has_tax_certificate = has_tax_certificate;
+        this.has_smn = has_smn;
+        this.has_no_criminal_certificate = has_no_criminal_certificate;
+        this.has_health_certificate = has_health_certificate;
+        this.has_sv = has_sv;
         this.status = status;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -64,4 +86,4 @@ class Employee {
     }
 }
 
-module.exports = Employee
+module.exports = Employee;

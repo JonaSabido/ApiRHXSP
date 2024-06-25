@@ -1,4 +1,4 @@
-const { Op } = require("sequelize");
+const { Op, fn, col } = require('sequelize');
 
 const AreaQueryFilter = (filters) => {
     const queryFilters = {}
@@ -177,6 +177,26 @@ const AntidopingQueryFilter = (filters) => {
         queryFilters.id_employee = filters.id_employee
     }
 
+    if (filters.result) {
+        queryFilters.result = filters.result
+    }
+
+    if (filters.year) {
+        queryFilters.createdAt = {
+            [Op.gte]: new Date(`${filters.year}-01-01`).toISOString().slice(0, 10) + 'T00:00:00',
+            [Op.lte]: new Date(`${filters.year}-12-31`).toISOString().slice(0, 10) + 'T23:59:59',
+        }
+    }
+
+    if (filters.start_date || filters.end_date) {
+        queryFilters.createdAt = {
+            [Op.and]: [
+                filters.start_date ? { [Op.gte]: fn('DATE', col('createdAt')), [Op.gte]: filters.start_date } : null,
+                filters.end_date ? { [Op.lte]: fn('DATE', col('createdAt')), [Op.lte]: new Date(filters.end_date).toISOString().slice(0, 10) + 'T23:59:59' } : null
+            ].filter(Boolean)
+        }
+    }
+
     return queryFilters;
 }
 
@@ -184,6 +204,22 @@ const TrainingQueryFilter = (filters) => {
     const queryFilters = {}
     if (filters.id_employee) {
         queryFilters.id_employee = filters.id_employee
+    }
+
+    if (filters.year) {
+        queryFilters.createdAt = {
+            [Op.gte]: new Date(`${filters.year}-01-01`).toISOString().slice(0, 10) + 'T00:00:00',
+            [Op.lte]: new Date(`${filters.year}-12-31`).toISOString().slice(0, 10) + 'T23:59:59',
+        }
+    }
+
+    if (filters.start_date || filters.end_date) {
+        queryFilters.createdAt = {
+            [Op.and]: [
+                filters.start_date ? { [Op.gte]: fn('DATE', col('createdAt')), [Op.gte]: filters.start_date } : null,
+                filters.end_date ? { [Op.lte]: fn('DATE', col('createdAt')), [Op.lte]: new Date(filters.end_date).toISOString().slice(0, 10) + 'T23:59:59' } : null
+            ].filter(Boolean)
+        }
     }
 
     return queryFilters;
@@ -288,9 +324,6 @@ const VacationTimeQueryFilter = (filters) => {
 
 const EmployeeVacationQueryFilter = (filters) => {
     const queryFilters = {}
-    // if (filters.id_employee) {
-    //     queryFilters.id_employee = filters.id_employee
-    // }
 
     if (filters.id_vacation_time) {
         queryFilters.id_vacation_time = filters.id_vacation_time
@@ -476,6 +509,50 @@ const EmployeeQueryFilter = (filters) => {
 
     if (filters.has_children) {
         queryFilters.has_children = filters.has_children
+    }
+
+    if (filters.has_birth_certificate) {
+        queryFilters.has_birth_certificate = filters.has_birth_certificate;
+    }
+
+    if (filters.has_identification) {
+        queryFilters.has_identification = filters.has_identification;
+    }
+
+    if (filters.has_curp) {
+        queryFilters.has_curp = filters.has_curp;
+    }
+
+    if (filters.has_nss) {
+        queryFilters.has_nss = filters.has_nss;
+    }
+
+    if (filters.has_address_certification) {
+        queryFilters.has_address_certification = filters.has_address_certification;
+    }
+
+    if (filters.has_studies_certification) {
+        queryFilters.has_studies_certification = filters.has_studies_certification;
+    }
+
+    if (filters.has_tax_certificate) {
+        queryFilters.has_tax_certificate = filters.has_tax_certificate;
+    }
+
+    if (filters.has_smn) {
+        queryFilters.has_smn = filters.has_smn;
+    }
+
+    if (filters.has_no_criminal_certificate) {
+        queryFilters.has_no_criminal_certificate = filters.has_no_criminal_certificate;
+    }
+
+    if (filters.has_health_certificate) {
+        queryFilters.has_health_certificate = filters.has_health_certificate;
+    }
+
+    if (filters.has_sv) {
+        queryFilters.has_sv = filters.has_sv;
     }
 
     return queryFilters;

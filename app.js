@@ -33,6 +33,8 @@ const analyticsRoute = require('./src/analytic/infrastructure/AnalyticRoute.js')
 
 const userRoute = require('./src/user/infrastructure/UserRoute.js')
 const authRoute = require('./src/auth/infrastructure/AuthRoute.js');
+const { createAll } = require('./src/notification/infrastructure/NotificationController.js');
+const { checkExpired } = require('./src/contract/infrastructure/ContractController.js');
 
 
 
@@ -55,5 +57,7 @@ app.use('/api',
 app.use('/uploads', express.static('uploads'));
 
 app.listen(PORT, () => {
+    createAll()
+    checkExpired()
     console.log('Servidor escuchando en el puerto ' + PORT);
 });

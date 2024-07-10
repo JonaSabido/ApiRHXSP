@@ -5,6 +5,8 @@ const { JobModel } = require('../../job/infrastructure/JobModel');
 const { RecruitmentMethodModel } = require('../../recruitment-method/infrastructure/RecruitmentMethodModel');
 const { EmployeeQueryFilter } = require('../../../helpers/QueryFilters');
 const { AntidopingModel } = require('../../antidoping/infrastructure/AntidopingModel');
+const fs = require('fs');
+const path = require('path');
 
 const relations = [
     {
@@ -164,6 +166,34 @@ class EmployeeRepository extends IEmployeeRepository {
         if (files.qr_image) {
             let file = files.qr_image
             file.mv(path + id + '/qr_image.jpg')
+        }
+    }
+
+    async destroyFilesById(id) {
+        const directory = path.join('uploads/employees/', id.toString());
+
+        try {
+            // Verificar si el directorio existe
+            if (fs.existsSync(directory)) {
+                // Leer todos los archivos en el directorio
+                const files = fs.readdirSync(directory);
+
+                // Eliminar cada archivo
+                files.forEach(file => {
+                    const filePath = path.join(directory, file);
+                    fs.unlinkSync(filePath);
+                    console.log(`Eliminando archivo ${filePath}`);
+                });
+
+                // Eliminar el directorio vacío
+                fs.rmdirSync(directory);
+                console.log(`Directorio ${directory} eliminado`);
+            } else {
+                console.log(`El directorio ${directory} no existe`);
+            }
+        } catch (err) {
+            console.error(`Error al eliminar archivos del directorio ${directory}:`, err);
+            throw new Error(`Error al eliminar archivos del directorio ${directory}: ${err.message}`);
         }
     }
 }

@@ -18,6 +18,10 @@ class IExtraTimeRepository {
   async delete(id) {
     throw new Error('Method not implemented');
   }
+
+  async destroyFilesById(id){
+    throw new Error('Method not implemented');
+  }
 }
 
 module.exports = IExtraTimeRepository;

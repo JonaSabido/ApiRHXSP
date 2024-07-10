@@ -26,6 +26,10 @@ class IEmployeeRepository {
   async saveFiles(id, files) {
     throw new Error('Method not implemented');
   }
+
+  async destroyFilesById(id){
+    throw new Error('Method not implemented');
+  }
 }
 
 module.exports = IEmployeeRepository;

@@ -14,6 +14,7 @@ const getAll = async (request, response) => {
     if (data.length) {
         const list = []
         data.forEach(element => {
+            console.log(element)
             const newDTO = new EmployeeVacationResponseDTO(element)
             list.push(newDTO)
         });

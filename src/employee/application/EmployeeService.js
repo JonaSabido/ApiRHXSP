@@ -71,7 +71,7 @@ class EmployeeService {
     async createEmployee(data) {
         const newEntity = await this.iEmployeeRepository.create(data);
         await this.iVacationTimeRepository.createInitialVacationTimes(newEntity);
-        
+
         return new Employee(
             newEntity.id,
             newEntity.id_department,
@@ -123,7 +123,11 @@ class EmployeeService {
 
     async deleteEmployee(id) {
         await this.iEmployeeRepository.getById(id);
-        return await this.iEmployeeRepository.delete(id)
+        const response = await this.iEmployeeRepository.delete(id);
+        if (response) {
+            await this.iEmployeeRepository.destroyFilesById(id)
+        }
+        return response
     }
 
     async saveFiles(id, files) {

@@ -114,9 +114,19 @@ const groupDatesByMonth = (dates) => {
         groupedDates[key].dates.push(dateString);
     });
 
-    return Object.values(groupedDates);
-}
+    // Convert the object to an array
+    const groupedDatesArray = Object.values(groupedDates);
 
+    groupedDatesArray.sort((a, b) => {
+        if (a.year === b.year) {
+            return a.month - b.month;
+        } else {
+            return a.year - b.year;
+        }
+    });
+
+    return groupedDatesArray;
+}
 module.exports = {
     getDifferenceDaysBetweenDates,
     getToday,

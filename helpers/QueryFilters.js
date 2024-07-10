@@ -325,10 +325,6 @@ const VacationTimeQueryFilter = (filters) => {
 const EmployeeVacationQueryFilter = (filters) => {
     const queryFilters = {}
 
-    if (filters.id_vacation_time) {
-        queryFilters.id_vacation_time = filters.id_vacation_time
-    }
-
     if (filters.start_year) {
         queryFilters.start_date = {
             [Op.gte]: new Date(`${filters.start_year}-01-01`).setUTCHours(0),

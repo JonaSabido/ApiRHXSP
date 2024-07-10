@@ -4,7 +4,7 @@ const { checkExpired } = require('./src/contract/infrastructure/ContractControll
 const { createNextVacationTime } = require('./src/employee/infrastructure/EmployeeController');
 
 // Configurar el cron job para que se ejecute todos los días a las 12:00 AM
-cron.schedule('40 16 * * *', () => {
+cron.schedule('0 0 * * *', () => {
     console.log('Running createAll function at 12:00 AM');
     createAll();
     checkExpired();

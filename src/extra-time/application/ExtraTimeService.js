@@ -29,7 +29,11 @@ class ExtraTimeService {
 
     async deleteExtraTime(id) {
         await this.iExtraTimeRepository.getById(id);
-        return await this.iExtraTimeRepository.delete(id)
+        const response = await this.iExtraTimeRepository.delete(id);
+        if (response) {
+            await this.iExtraTimeRepository.destroyFilesById(id)
+        }
+        return response
     }
 
     async saveFiles(id, files) {

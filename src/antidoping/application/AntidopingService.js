@@ -29,7 +29,11 @@ class AntidopingService {
 
     async deleteAntidoping(id) {
         await this.iAntidopingRepository.getById(id);
-        return await this.iAntidopingRepository.delete(id)
+        const response = await this.iAntidopingRepository.delete(id);
+        if (response) {
+            await this.iAntidopingRepository.destroyFilesById(id)
+        }
+        return response
     }
 
     async saveFiles(id, files) {

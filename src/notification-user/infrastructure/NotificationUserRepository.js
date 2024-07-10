@@ -20,6 +20,7 @@ class NotificationUserRepository extends INotificationUserRepository {
         try {
             return await NotificationUserModel.findAll({
                 include: relations,
+                order: [['id', 'DESC']],
                 where: NotificationUserQueryFilter(filters)
             });
         }

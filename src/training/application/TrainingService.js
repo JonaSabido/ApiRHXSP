@@ -29,7 +29,11 @@ class TrainingService {
 
     async deleteTraining(id) {
         await this.iTrainingRepository.getById(id);
-        return await this.iTrainingRepository.delete(id)
+        const response = await this.iTrainingRepository.delete(id);
+        if (response) {
+            await this.iTrainingRepository.destroyFilesById(id)
+        }
+        return response
     }
 
     async saveFiles(id, files) {

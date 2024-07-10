@@ -123,6 +123,11 @@ class EmployeeService {
 
     async deleteEmployee(id) {
         await this.iEmployeeRepository.getById(id);
+        const vacationTimes = await this.iVacationTimeRepository.getAll({id_employee: id});
+        for(const vt of vacationTimes){
+            await this.iVacationTimeRepository.delete(vt.id)
+        }
+
         const response = await this.iEmployeeRepository.delete(id);
         if (response) {
             await this.iEmployeeRepository.destroyFilesById(id)

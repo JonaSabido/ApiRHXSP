@@ -66,6 +66,20 @@ class VacationTimeRepository extends IVacationTimeRepository {
         }
     }
 
+    async delete(id) {
+        try {
+            return await VacationTimeModel.destroy(
+                {
+                    where: {
+                        id: id
+                    }
+                })
+        }
+        catch (err) {
+            throw new Error(err.message)
+        }
+    }
+
 
 
     async createInitialVacationTimes(dataEmployee) {

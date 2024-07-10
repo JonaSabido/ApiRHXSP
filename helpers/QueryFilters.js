@@ -478,7 +478,7 @@ const EmployeeQueryFilter = (filters) => {
     }
 
     if (filters.entry_start_date || filters.entry_end_date) {
-        queryFilters.natal_date = {
+        queryFilters.entry_date = {
             [Op.gte]: new Date(filters.entry_start_date ?? '0001-01-01').setUTCHours(0),
             [Op.lte]: new Date(filters.entry_end_date ?? '9999-12-31').setUTCHours(0),
         }

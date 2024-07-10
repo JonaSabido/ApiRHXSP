@@ -46,7 +46,11 @@ class ContractService {
 
     async deleteContract(id) {
         await this.iContractRepository.getById(id);
-        return await this.iContractRepository.delete(id)
+        const response = await this.iContractRepository.delete(id);
+        if (response) {
+            await this.iContractRepository.destroyFilesById(id)
+        }
+        return response
     }
 
     async saveFiles(id, files) {

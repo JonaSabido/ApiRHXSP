@@ -25,6 +25,21 @@ function generateRelations(filters) {
     ]
 }
 
+const relations = [
+    {
+        model: VacationTimeModel,
+        attributes: ['id', 'id_employee', 'start_date', 'end_date', 'days', 'available_days'],
+        as: 'vacation_time',
+        include: [
+            {
+                model: EmployeeModel,
+                attributes: ['id', 'name', 'sure_name', 'last_name'],
+                as: 'employee',
+            },
+        ]
+    },
+]
+
 class EmployeeVacationRepository extends IEmployeeVacationRepository {
     constructor() {
         super()

@@ -1,5 +1,7 @@
 const { Op, fn, col } = require('sequelize');
 
+const timezoneOffset = 0
+
 const AreaQueryFilter = (filters) => {
     const queryFilters = {}
     if (filters.name) {
@@ -61,15 +63,15 @@ const EmployeeReentryQueryFilter = (filters) => {
 
     if (filters.year) {
         queryFilters.reentry_date = {
-            [Op.gte]: new Date(`${filters.year}-01-01`).toISOString().slice(0, 10) + 'T00:00:00',
-            [Op.lte]: new Date(`${filters.year}-12-31`).toISOString().slice(0, 10) + 'T00:00:00',
+            [Op.gte]: new Date(`${filters.year}-01-01`).setUTCHours(timezoneOffset, 0, 0, 0),
+            [Op.lte]: new Date(`${filters.year}-12-31`).setUTCHours(timezoneOffset + 24, -1, 59, 59),
         }
     }
 
     if (filters.start_date || filters.end_date) {
         queryFilters.reentry_date = {
-            [Op.gte]: new Date(filters.start_date ?? '0001-01-01').toISOString().slice(0, 10) + 'T00:00:00',
-            [Op.lte]: new Date(filters.end_date ?? '9999-12-31').toISOString().slice(0, 10) + 'T00:00:00',
+            [Op.gte]: new Date(filters.start_date ?? '0001-01-01').setUTCHours(timezoneOffset, 0, 0, 0),
+            [Op.lte]: new Date(filters.end_date ?? '9999-12-31').setUTCHours(timezoneOffset + 24, -1, 59, 59),
         }
     }
     return queryFilters;
@@ -83,15 +85,15 @@ const EmployeeLeaveQueryFilter = (filters) => {
 
     if (filters.year) {
         queryFilters.leave_date = {
-            [Op.gte]: new Date(`${filters.year}-01-01`).toISOString().slice(0, 10) + 'T00:00:00',
-            [Op.lte]: new Date(`${filters.year}-12-31`).toISOString().slice(0, 10) + 'T00:00:00',
+            [Op.gte]: new Date(`${filters.year}-01-01`).setUTCHours(timezoneOffset, 0, 0, 0),
+            [Op.lte]: new Date(`${filters.year}-12-31`).setUTCHours(timezoneOffset + 24, -1, 59, 59),
         }
     }
 
     if (filters.start_date || filters.end_date) {
         queryFilters.leave_date = {
-            [Op.gte]: new Date(filters.start_date ?? '0001-01-01').toISOString().slice(0, 10) + 'T00:00:00',
-            [Op.lte]: new Date(filters.end_date ?? '9999-12-31').toISOString().slice(0, 10) + 'T00:00:00',
+            [Op.gte]: new Date(filters.start_date ?? '0001-01-01').setUTCHours(timezoneOffset, 0, 0, 0),
+            [Op.lte]: new Date(filters.end_date ?? '9999-12-31').setUTCHours(timezoneOffset + 24, -1, 59, 59),
         }
     }
     return queryFilters;
@@ -183,8 +185,8 @@ const AntidopingQueryFilter = (filters) => {
 
     if (filters.year) {
         queryFilters.createdAt = {
-            [Op.gte]: new Date(`${filters.year}-01-01`).toISOString().slice(0, 10) + 'T00:00:00',
-            [Op.lte]: new Date(`${filters.year}-12-31`).toISOString().slice(0, 10) + 'T23:59:59',
+            [Op.gte]: new Date(`${filters.year}-01-01`).setUTCHours(timezoneOffset, 0, 0, 0),
+            [Op.lte]: new Date(`${filters.year}-12-31`).setUTCHours(timezoneOffset + 24, -1, 59, 59),
         }
     }
 
@@ -208,8 +210,8 @@ const TrainingQueryFilter = (filters) => {
 
     if (filters.year) {
         queryFilters.createdAt = {
-            [Op.gte]: new Date(`${filters.year}-01-01`).toISOString().slice(0, 10) + 'T00:00:00',
-            [Op.lte]: new Date(`${filters.year}-12-31`).toISOString().slice(0, 10) + 'T23:59:59',
+            [Op.gte]: new Date(`${filters.year}-01-01`).setUTCHours(timezoneOffset, 0, 0, 0),
+            [Op.lte]: new Date(`${filters.year}-12-31`).setUTCHours(timezoneOffset + 24, -1, 59, 59),
         }
     }
 
@@ -233,15 +235,15 @@ const ExtraTimeQueryFilter = (filters) => {
 
     if (filters.year) {
         queryFilters.date = {
-            [Op.gte]: new Date(`${filters.year}-01-01`).toISOString().slice(0, 10) + 'T00:00:00',
-            [Op.lte]: new Date(`${filters.year}-12-31`).toISOString().slice(0, 10) + 'T00:00:00',
+            [Op.gte]: new Date(`${filters.year}-01-01`).setUTCHours(timezoneOffset, 0, 0, 0),
+            [Op.lte]: new Date(`${filters.year}-12-31`).setUTCHours(timezoneOffset + 24, -1, 59, 59),
         }
     }
 
     if (filters.start_date || filters.end_date) {
         queryFilters.date = {
-            [Op.gte]: new Date(filters.start_date ?? '0001-01-01').toISOString().slice(0, 10) + 'T00:00:00',
-            [Op.lte]: new Date(filters.end_date ?? '9999-12-31').toISOString().slice(0, 10) + 'T00:00:00',
+            [Op.gte]: new Date(filters.start_date ?? '0001-01-01').setUTCHours(timezoneOffset, 0, 0, 0),
+            [Op.lte]: new Date(filters.end_date ?? '9999-12-31').setUTCHours(timezoneOffset + 24, -1, 59, 59),
         }
     }
 
@@ -272,15 +274,15 @@ const AbsenceQueryFilter = (filters) => {
 
     if (filters.year) {
         queryFilters.date = {
-            [Op.gte]: new Date(`${filters.year}-01-01`).toISOString().slice(0, 10) + 'T00:00:00',
-            [Op.lte]: new Date(`${filters.year}-12-31`).toISOString().slice(0, 10) + 'T00:00:00',
+            [Op.gte]: new Date(`${filters.year}-01-01`).setUTCHours(timezoneOffset, 0, 0, 0),
+            [Op.lte]: new Date(`${filters.year}-12-31`).setUTCHours(timezoneOffset + 24, -1, 59, 59),
         }
     }
 
     if (filters.start_date || filters.end_date) {
         queryFilters.date = {
-            [Op.gte]: new Date(filters.start_date ?? '0001-01-01').toISOString().slice(0, 10) + 'T00:00:00',
-            [Op.lte]: new Date(filters.end_date ?? '9999-12-31').toISOString().slice(0, 10) + 'T00:00:00',
+            [Op.gte]: new Date(filters.start_date ?? '0001-01-01').setUTCHours(timezoneOffset, 0, 0, 0),
+            [Op.lte]: new Date(filters.end_date ?? '9999-12-31').setUTCHours(timezoneOffset + 24, -1, 59, 59),
         }
     }
     return queryFilters;
@@ -298,15 +300,15 @@ const UniformQueryFilter = (filters) => {
 
     if (filters.year) {
         queryFilters.delivered_date = {
-            [Op.gte]: new Date(`${filters.year}-01-01`).toISOString().slice(0, 10) + 'T00:00:00',
-            [Op.lte]: new Date(`${filters.year}-12-31`).toISOString().slice(0, 10) + 'T00:00:00',
+            [Op.gte]: new Date(`${filters.year}-01-01`).setUTCHours(timezoneOffset, 0, 0, 0),
+            [Op.lte]: new Date(`${filters.year}-12-31`).setUTCHours(timezoneOffset + 24, -1, 59, 59),
         }
     }
 
     if (filters.start_date || filters.end_date) {
         queryFilters.delivered_date = {
-            [Op.gte]: new Date(filters.start_date ?? '0001-01-01').toISOString().slice(0, 10) + 'T00:00:00',
-            [Op.lte]: new Date(filters.end_date ?? '9999-12-31').toISOString().slice(0, 10) + 'T00:00:00',
+            [Op.gte]: new Date(filters.start_date ?? '0001-01-01').setUTCHours(timezoneOffset, 0, 0, 0),
+            [Op.lte]: new Date(filters.end_date ?? '9999-12-31').setUTCHours(timezoneOffset + 24, -1, 59, 59),
         }
     }
 
@@ -327,29 +329,29 @@ const EmployeeVacationQueryFilter = (filters) => {
 
     if (filters.start_year) {
         queryFilters.start_date = {
-            [Op.gte]: new Date(`${filters.start_year}-01-01`).toISOString().slice(0, 10) + 'T00:00:00',
-            [Op.lte]: new Date(`${filters.start_year}-12-31`).toISOString().slice(0, 10) + 'T00:00:00',
+            [Op.gte]: new Date(`${filters.start_year}-01-01`).setUTCHours(timezoneOffset, 0, 0, 0),
+            [Op.lte]: new Date(`${filters.start_year}-12-31`).setUTCHours(timezoneOffset + 24, -1, 59, 59),
         }
     }
 
     if (filters.end_year) {
         queryFilters.end_date = {
-            [Op.gte]: new Date(`${filters.end_year}-01-01`).toISOString().slice(0, 10) + 'T00:00:00',
-            [Op.lte]: new Date(`${filters.end_year}-12-31`).toISOString().slice(0, 10) + 'T00:00:00',
+            [Op.gte]: new Date(`${filters.end_year}-01-01`).setUTCHours(timezoneOffset, 0, 0, 0),
+            [Op.lte]: new Date(`${filters.end_year}-12-31`).setUTCHours(timezoneOffset + 24, -1, 59, 59),
         }
     }
 
     if (filters.start_start_date || filters.start_end_date) {
         queryFilters.start_date = {
-            [Op.gte]: new Date(filters.start_start_date ?? '0001-01-01').toISOString().slice(0, 10) + 'T00:00:00',
-            [Op.lte]: new Date(filters.start_end_date ?? '9999-12-31').toISOString().slice(0, 10) + 'T00:00:00',
+            [Op.gte]: new Date(filters.start_start_date ?? '0001-01-01').setUTCHours(timezoneOffset, 0, 0, 0),
+            [Op.lte]: new Date(filters.start_end_date ?? '9999-12-31').setUTCHours(timezoneOffset + 24, -1, 59, 59),
         }
     }
 
     if (filters.end_start_date || filters.end_end_date) {
         queryFilters.end_date = {
-            [Op.gte]: new Date(filters.end_start_date ?? '0001-01-01').toISOString().slice(0, 10) + 'T00:00:00',
-            [Op.lte]: new Date(filters.end_end_date ?? '9999-12-31').toISOString().slice(0, 10) + 'T00:00:00',
+            [Op.gte]: new Date(filters.end_start_date ?? '0001-01-01').setUTCHours(timezoneOffset, 0, 0, 0),
+            [Op.lte]: new Date(filters.end_end_date ?? '9999-12-31').setUTCHours(timezoneOffset + 24, -1, 59, 59),
         }
     }
     return queryFilters;
@@ -401,8 +403,8 @@ const RecommendationPaymentQueryFilter = (filters) => {
 
     if (filters.start_date || filters.end_date) {
         queryFilters.payment_date = {
-            [Op.gte]: new Date(filters.start_date ?? '0001-01-01').toISOString().slice(0, 10) + 'T00:00:00',
-            [Op.lte]: new Date(filters.end_date ?? '9999-12-31').toISOString().slice(0, 10) + 'T00:00:00',
+            [Op.gte]: new Date(filters.start_date ?? '0001-01-01').setUTCHours(timezoneOffset, 0, 0, 0),
+            [Op.lte]: new Date(filters.end_date ?? '9999-12-31').setUTCHours(timezoneOffset + 24, -1, 59, 59),
         }
     }
 
@@ -479,8 +481,8 @@ const EmployeeQueryFilter = (filters) => {
 
     if (filters.entry_start_date || filters.entry_end_date) {
         queryFilters.entry_date = {
-            [Op.gte]: new Date(filters.entry_start_date ?? '0001-01-01').toISOString().slice(0, 10) + 'T00:00:00',
-            [Op.lte]: new Date(filters.entry_end_date ?? '9999-12-31').toISOString().slice(0, 10) + 'T00:00:00',
+            [Op.gte]: new Date(filters.entry_start_date ?? '0001-01-01').toISOString().slice(0, 10),
+            [Op.lte]: new Date(filters.entry_end_date ?? '9999-12-31').toISOString().slice(0, 10),
         }
     }
 
@@ -498,8 +500,8 @@ const EmployeeQueryFilter = (filters) => {
 
     if (filters.natal_start_date || filters.natal_end_date) {
         queryFilters.natal_date = {
-            [Op.gte]: new Date(filters.natal_start_date ?? '0001-01-01').toISOString().slice(0, 10) + 'T00:00:00',
-            [Op.lte]: new Date(filters.natal_end_date ?? '9999-12-31').toISOString().slice(0, 10) + 'T00:00:00',
+            [Op.gte]: new Date(filters.natal_start_date ?? '0001-01-01').toISOString().slice(0, 10),
+            [Op.lte]: new Date(filters.natal_end_date ?? '9999-12-31').toISOString().slice(0, 10),
         }
     }
 

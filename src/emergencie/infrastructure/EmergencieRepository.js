@@ -21,6 +21,7 @@ class EmergencieRepository extends IEmergencieRepository {
         try {
             return await EmergencieModel.findAll({
                 include: relations,
+                order: [['id', 'DESC']],
                 where: EmergencyQueryFilter(filters)
             });
         }

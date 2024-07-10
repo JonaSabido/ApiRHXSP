@@ -10,7 +10,8 @@ class RecruitmentMethodRepository extends IRecruitmentMethodRepository {
     async getAll(filters) {
         try {
             return await RecruitmentMethodModel.findAll({
-                where: RecruitmentMethodQueryFilter(filters)
+                where: RecruitmentMethodQueryFilter(filters),
+                order: [['id', 'DESC']],
             });
         }
         catch (err) {

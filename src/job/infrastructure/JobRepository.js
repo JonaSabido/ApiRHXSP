@@ -20,6 +20,7 @@ class JobRepository extends IJobRepository {
     async getAll(filters) {
         try {
             return await JobModel.findAll({
+                order: [['id', 'DESC']],
                 where: JobQueryFilter(filters),
                 include: relations
             });

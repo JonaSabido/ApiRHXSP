@@ -10,7 +10,9 @@ class TypeAbsenceRepository extends ITypeAbsenceRepository {
     async getAll(filters) {
         try {
             return await TypeAbsenceModel.findAll({
-                where: TypeAbsenceQueryFilter(filters)
+                where: TypeAbsenceQueryFilter(filters),
+                order: [['id', 'DESC']],
+
             });
         }
         catch (err) {

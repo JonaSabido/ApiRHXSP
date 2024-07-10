@@ -27,6 +27,7 @@ class EmployeeLeaveRepository extends IEmployeeLeaveRepository {
         try {
             return await EmployeeLeaveModel.findAll({
                 include: relations,
+                order: [['id', 'DESC']],
                 where: EmployeeLeaveQueryFilter(filters)
             });
         }

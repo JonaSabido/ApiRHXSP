@@ -21,6 +21,7 @@ class EmployeeReentryRepository extends IEmployeeReentryRepository {
         try {
             return await EmployeeReentryModel.findAll({
                 include: relations,
+                order: [['id', 'DESC']],
                 where: EmployeeReentryQueryFilter(filters)
             });
         }

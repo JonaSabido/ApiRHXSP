@@ -21,6 +21,7 @@ class ContractRepository extends IContractRepository {
         try {
             return await ContractModel.findAll({
                 include: relations,
+                order: [['id', 'DESC']],
                 where: ContractQueryFilter(filters)
             });
         }

@@ -27,6 +27,7 @@ class EmployeeDiseaseRepository extends IEmployeeDiseaseRepository {
         try {
             return await EmployeeDiseaseModel.findAll({
                 include: relations,
+                order: [['id', 'DESC']],
                 where: EmployeeDiseaseQueryFilter(filters)
             });
         }

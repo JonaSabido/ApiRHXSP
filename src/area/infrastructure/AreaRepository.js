@@ -10,6 +10,7 @@ class AreaRepository extends IAreaRepository {
     async getAll(filters) {
         try {
             return await AreaModel.findAll({
+                order: [['id', 'DESC']],
                 where: AreaQueryFilter(filters)
             });
         }

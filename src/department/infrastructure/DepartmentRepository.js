@@ -10,6 +10,7 @@ class DepartmentRepository extends IDepartmentRepository {
     async getAll(filters) {
         try {
             return await DepartmentModel.findAll({
+                order: [['id', 'DESC']],
                 where: DepartmentQueryFilter(filters)
             });
         }

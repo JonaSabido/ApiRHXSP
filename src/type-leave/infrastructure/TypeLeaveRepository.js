@@ -10,7 +10,8 @@ class TypeLeaveRepository extends ITypeLeaveRepository {
     async getAll(filters) {
         try {
             return await TypeLeaveModel.findAll({
-                where: TypeLeaveQueryFilter(filters)
+                where: TypeLeaveQueryFilter(filters),
+                order: [['id', 'DESC']],
             });
         }
         catch (err) {

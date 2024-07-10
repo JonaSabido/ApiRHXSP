@@ -34,6 +34,7 @@ class AbsenceRepository extends IAbsenceRepository {
         try {
             return await AbsenceModel.findAll({
                 include: [relationEmployee, relationTypeAbsence, relationJob],
+                order: [['id', 'DESC']],
                 where: AbsenceQueryFilter(filters)
             });
         }

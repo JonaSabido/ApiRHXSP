@@ -21,6 +21,7 @@ class UniformRepository extends IUniformRepository {
         try {
             return await UniformModel.findAll({
                 include: relations,
+                order: [['id', 'DESC']],
                 where: UniformQueryFilter(filters)
             });
         }

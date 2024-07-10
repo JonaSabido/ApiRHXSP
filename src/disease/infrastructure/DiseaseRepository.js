@@ -10,7 +10,8 @@ class DiseaseRepository extends IDiseaseRepository {
     async getAll(filters) {
         try {
             return await DiseaseModel.findAll({
-                where: DiseaseQueryFilter(filters)
+                where: DiseaseQueryFilter(filters),
+                order: [['id', 'DESC']],
             });
         }
         catch (err) {
